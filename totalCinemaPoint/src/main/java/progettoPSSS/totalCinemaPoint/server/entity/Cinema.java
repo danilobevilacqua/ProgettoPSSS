@@ -12,7 +12,7 @@ public class Cinema {
 	
 	public Cinema() {
 		super();
-		this.listaFilms = getFilms();
+		this.listaFilms = new ArrayList<Film>();
 	}
 	
 	public Cinema(List<Film> listaFilms) {
@@ -28,7 +28,7 @@ public class Cinema {
 		this.listaFilms = listaFilms;
 	}
 	
-	public static List<Film> getFilms(){		
+	public List<Film> getFilms(){		
 		CinemaDAO  c = new CinemaDAO();
 		List <Film> listaFilms= new ArrayList<Film>();		
 		for(int i = 0 ; i < c.getListaFilms().size();i++) {
@@ -36,5 +36,10 @@ public class Cinema {
 		}
 		return listaFilms;
 	}
+	
+	public void addListaFilm() {
+		this.setListaFilms(getFilms());
+	}
+	
 
 }

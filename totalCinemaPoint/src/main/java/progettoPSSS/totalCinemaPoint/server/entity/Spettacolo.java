@@ -35,7 +35,7 @@ public class Spettacolo {
 		this.prezzo = s.getPrezzo();
 		this.idFilm = s.getIdFilm_fk();
 		this.nomeSala = s.getNomeSala_fk();
-		this.listaPrenotazioni = getPrenotazioni(s.getIdSpettacolo());
+		this.listaPrenotazioni = new ArrayList<Prenotazione>();
 	}
 		
 	public Spettacolo(int idSpettacolo, Date data, String ora, Double prezzo, int idFilm, String nomeSala,List<Prenotazione> listaPrenotazioni) {
@@ -90,6 +90,10 @@ public class Spettacolo {
 	}
 	public void setListaPrenotazioni(List<Prenotazione> listaPrenotazioni) {
 		this.listaPrenotazioni = listaPrenotazioni;
+	}
+	
+	public void addListaPrenotazioni() {
+		this.setListaPrenotazioni(getPrenotazioni(this.idSpettacolo));
 	}
 	
 	public List<Prenotazione> getPrenotazioni(int codiceSpettacolo){

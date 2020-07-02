@@ -12,7 +12,7 @@ import progettoPSSS.totalCinemaPoint.server.entity.Film;
 public class ControllerCliente implements ServizioCliente {
 	
 	List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
-
+	
 	@Override
 	public synchronized void prenotaSpettacolo() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -37,9 +37,9 @@ public class ControllerCliente implements ServizioCliente {
 		// TODO Auto-generated method stub
 		List<String> listaTitoli = new ArrayList<String>();
 		
-		for( Film f :  Cinema.getFilms() ) {
+		/*for( Film f :  Cinema.getFilms() ) {
 			listaTitoli.add(f.getTitolo());		
-		}
+		}*/
 		
 		return listaTitoli;
 	}

@@ -34,19 +34,9 @@ public class Film {
 		this.anno = f.getAnno();
 		this.regista = f.getRegista();
 		this.locandina = f.getLocandina();
-		this.listaSpettacoli = getSpettacoli(f.getIdFilm());
+		this.listaSpettacoli = new ArrayList<Spettacolo>();
 	}
-	
-	public Film(FilmDAO f, boolean caricaListaSpettacoli) {
-		this.idFilm = f.getIdFilm();
-		this.titolo = f.getTitolo();
-		this.descrizione = f.getDescrizione();
-		this.anno = f.getAnno();
-		this.regista = f.getRegista();
-		this.locandina = f.getLocandina();
-		this.listaSpettacoli = getSpettacoli(f.getIdFilm());
-	}
-	
+		
 	public Film(int idFilm, String titolo, String descrizione, int anno, String regista, byte[] locandina, List<Spettacolo> listaSpettacoli) {
 		super();
 		this.idFilm = idFilm;
@@ -99,6 +89,10 @@ public class Film {
 	}
 	public void setListaSpettacoli(List<Spettacolo> listaSpettacoli) {
 		this.listaSpettacoli = listaSpettacoli;
+	}
+	
+	public void addListaSpettacoli() {
+		this.setListaSpettacoli(getSpettacoli(this.getIdFilm()));
 	}
 	
 	public List<Spettacolo> getSpettacoli(int codiceFilm){
