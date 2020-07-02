@@ -26,7 +26,7 @@ public class CinemaDAO {
 		this.listaFilms = listaFilms;
 	}
 	
-	public static List<FilmDAO> getAllFilms() {
+	public List<FilmDAO> getAllFilms() {
 	    Session session = HibernateConnectionManager.getSessionFactory().openSession();
 	    session.beginTransaction();
 	 

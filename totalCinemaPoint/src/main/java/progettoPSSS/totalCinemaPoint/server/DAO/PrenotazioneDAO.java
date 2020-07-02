@@ -1,5 +1,6 @@
 package progettoPSSS.totalCinemaPoint.server.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 
@@ -25,13 +27,15 @@ public class PrenotazioneDAO {
 	private String usernameCliente_fk;
 	@Column(name = "Spettacoli_idSpettacolo", nullable = false)
 	private int idSpettacolo_fk;
-	
+	@Transient
+	private List<PostoPrenotatoDAO> listaPostiPrenotati;
 	public PrenotazioneDAO() {
 		super();
 		this.codice = 0;
 		this.importo = 0.0;
 		this.usernameCliente_fk = "";
 		this.idSpettacolo_fk = 0;
+		this.listaPostiPrenotati = new ArrayList<PostoPrenotatoDAO>();
 	}
 	
 	public PrenotazioneDAO(int codice) {
@@ -79,6 +83,14 @@ public class PrenotazioneDAO {
 		this.idSpettacolo_fk = idSpettacolo_fk;
 	}
 	
+	public List<PostoPrenotatoDAO> getListaPostiPrenotati() {
+		return listaPostiPrenotati;
+	}
+
+	public void setListaPostiPrenotati(List<PostoPrenotatoDAO> listaPostiPrenotati) {
+		this.listaPostiPrenotati = listaPostiPrenotati;
+	}
+
 	public int savePrenotazione() {
 		Session session = HibernateConnectionManager.getSessionFactory().openSession();
 		  session.beginTransaction();
@@ -89,15 +101,14 @@ public class PrenotazioneDAO {
 		  return id;
 	}
 	
-	public static List<PostoPrenotatoDAO> getAllPostiPrenotati(int idPrenotazione) {
+	public List<PostoPrenotatoDAO> getAllPostiPrenotati(int idPrenotazione) {
 	    Session session = HibernateConnectionManager.getSessionFactory().openSession();
-	    session.beginTransaction();
-	 
+	    session.beginTransaction();	 
 	    @SuppressWarnings("unchecked")
-	    List<PostoPrenotatoDAO> posti = (List<PostoPrenotatoDAO>) session.createQuery("FROM PostoPrenotatoDAO where Prenotazioni_codice = :idscelto").setParameter("idscelto", idPrenotazione).list();
-	 
+	    List<PostoPrenotatoDAO> posti = (List<PostoPrenotatoDAO>) session.createQuery("FROM PostoPrenotatoDAO where Prenotazioni_codice = :idscelto").setParameter("idscelto", idPrenotazione).list();	 
 	    session.getTransaction().commit();
 	    session.close();
+	    this.listaPostiPrenotati = posti;
 	    return posti;
 	  }
 	

@@ -29,10 +29,10 @@ public class Cinema {
 	}
 	
 	public static List<Film> getFilms(){		
-
+		CinemaDAO  c = new CinemaDAO();
 		List <Film> listaFilms= new ArrayList<Film>();		
-		for(int i = 0 ; i < CinemaDAO.getAllFilms().size();i++) {
-			listaFilms.add(new Film(CinemaDAO.getAllFilms().get(i)));
+		for(int i = 0 ; i < c.getListaFilms().size();i++) {
+			listaFilms.add(new Film(c.getListaFilms().get(i)));
 		}
 		return listaFilms;
 	}

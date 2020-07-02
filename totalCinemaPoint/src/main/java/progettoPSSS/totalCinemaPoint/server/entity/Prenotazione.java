@@ -75,10 +75,11 @@ public class Prenotazione {
 	
 
 	public List<PostoPrenotato> getPostiPrenotati(int codicePrenotazione){
-		
+		PrenotazioneDAO p = new PrenotazioneDAO();
+		p.getAllPostiPrenotati(codicePrenotazione);
 		List <PostoPrenotato> listaPostiPrenotati= new ArrayList<PostoPrenotato>();		
-		for(int i = 0 ; i < PrenotazioneDAO.getAllPostiPrenotati(codicePrenotazione).size();i++) {
-			listaPostiPrenotati.add(new PostoPrenotato(PrenotazioneDAO.getAllPostiPrenotati(codicePrenotazione).get(i)));
+		for(int i = 0 ; i < p.getListaPostiPrenotati().size();i++) {
+			listaPostiPrenotati.add(new PostoPrenotato(p.getListaPostiPrenotati().get(i)));
 		}
 		return listaPostiPrenotati;
 	}

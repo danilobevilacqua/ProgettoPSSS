@@ -94,9 +94,11 @@ public class Spettacolo {
 	
 	public List<Prenotazione> getPrenotazioni(int codiceSpettacolo){
 		
+		SpettacoloDAO s = new SpettacoloDAO();
+		s.getAllPrenotazioni(codiceSpettacolo);
 		List <Prenotazione> listaPrenotazioni= new ArrayList<Prenotazione>();		
-		for(int i = 0 ; i < SpettacoloDAO.getAllPrenotazioni(codiceSpettacolo).size();i++) {
-			listaPrenotazioni.add(new Prenotazione(SpettacoloDAO.getAllPrenotazioni(codiceSpettacolo).get(i)));
+		for(int i = 0 ; i < s.getListaPrenotazioni().size();i++) {
+			listaPrenotazioni.add(new Prenotazione(s.getListaPrenotazioni().get(i)));
 		}
 		return listaPrenotazioni;
 	}

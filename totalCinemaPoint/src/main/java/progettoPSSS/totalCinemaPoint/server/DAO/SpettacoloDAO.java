@@ -1,7 +1,7 @@
 package progettoPSSS.totalCinemaPoint.server.DAO;
 
 import java.sql.Date;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 
@@ -31,6 +32,8 @@ public class SpettacoloDAO {
 	private int idFilm_fk;
 	@Column(name = "Sale_nome", nullable = false)
 	private String nomeSala_fk;
+	@Transient
+	private List<PrenotazioneDAO> listaPrenotazioni;
 	
 	public SpettacoloDAO() {
 		super();
@@ -40,6 +43,7 @@ public class SpettacoloDAO {
 		this.prezzo = 0.0;
 		this.idFilm_fk = 0;
 		this.nomeSala_fk = "";
+		this.listaPrenotazioni= new ArrayList<PrenotazioneDAO>();
 	}
 	
 	public SpettacoloDAO(int idSpettacolo) {
@@ -102,15 +106,23 @@ public class SpettacoloDAO {
 		this.nomeSala_fk = nomeSala_fk;
 	}
 	
-	public static List<PrenotazioneDAO> getAllPrenotazioni(int idSpettacolo) {
+	public List<PrenotazioneDAO> getListaPrenotazioni() {
+		return listaPrenotazioni;
+	}
+
+	public void setListaPrenotazioni(List<PrenotazioneDAO> listaPrenotazioni) {
+		this.listaPrenotazioni = listaPrenotazioni;
+	}
+
+	public List<PrenotazioneDAO> getAllPrenotazioni(int idSpettacolo) {
 	    Session session = HibernateConnectionManager.getSessionFactory().openSession();
-	    session.beginTransaction();
-	 
+	    session.beginTransaction();	 
 	    @SuppressWarnings("unchecked")
 	    List<PrenotazioneDAO> prenotazioni = (List<PrenotazioneDAO>) session.createQuery("FROM PrenotazioneDAO where Spettacoli_idSpettacolo = :idscelto").setParameter("idscelto", idSpettacolo).list();
 	 
 	    session.getTransaction().commit();
 	    session.close();
+	   this.listaPrenotazioni = prenotazioni;
 	    return prenotazioni;
 	  }
 }

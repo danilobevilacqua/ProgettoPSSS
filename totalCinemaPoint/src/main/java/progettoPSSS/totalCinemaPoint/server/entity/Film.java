@@ -102,10 +102,11 @@ public class Film {
 	}
 	
 	public List<Spettacolo> getSpettacoli(int codiceFilm){
-		
+		FilmDAO f = new FilmDAO();
+		f.getAllSpettacoli(codiceFilm);
 		List <Spettacolo> listaSpettacoli= new ArrayList<Spettacolo>();		
-		for(int i = 0 ; i < FilmDAO.getAllSpettacoli(codiceFilm).size();i++) {
-			listaSpettacoli.add(new Spettacolo(FilmDAO.getAllSpettacoli(codiceFilm).get(i)));
+		for(int i = 0 ; i < f.getListaSpettacoli().size();i++) {
+			listaSpettacoli.add(new Spettacolo(f.getListaSpettacoli().get(i)));
 		}
 		return listaSpettacoli;
 	}	

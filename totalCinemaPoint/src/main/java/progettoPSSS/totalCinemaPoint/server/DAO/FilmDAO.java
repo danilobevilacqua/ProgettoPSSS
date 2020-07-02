@@ -1,5 +1,6 @@
 package progettoPSSS.totalCinemaPoint.server.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 
@@ -32,6 +34,8 @@ public class FilmDAO {
 	@Lob
 	@Column(name="locandina", columnDefinition = "longblob")
 	private byte [] locandina;
+	@Transient
+	private List<SpettacoloDAO> listaSpettacoli;
 	
 	public FilmDAO() {
 		super();
@@ -41,6 +45,7 @@ public class FilmDAO {
 		this.anno = 0;
 		this.regista = "";
 		this.locandina = null;
+		this.listaSpettacoli = new ArrayList<SpettacoloDAO>();
 	}
 	
 	public FilmDAO(int idFilm) {
@@ -114,7 +119,15 @@ public class FilmDAO {
 		this.locandina = locandina;
 	}
 	
-	public static List<SpettacoloDAO> getAllSpettacoli(int codiceFilm) {
+	public List<SpettacoloDAO> getListaSpettacoli() {
+		return listaSpettacoli;
+	}
+
+	public void setListaSpettacoli(List<SpettacoloDAO> listaSpettacoli) {
+		this.listaSpettacoli = listaSpettacoli;
+	}
+
+	public List<SpettacoloDAO> getAllSpettacoli(int codiceFilm) {
 	    Session session = HibernateConnectionManager.getSessionFactory().openSession();
 	    session.beginTransaction();
 	 
@@ -123,6 +136,8 @@ public class FilmDAO {
 	 
 	    session.getTransaction().commit();
 	    session.close();
+	    
+	    this.listaSpettacoli=spettacoli;	    		
 	    return spettacoli;
 	  }	
 
