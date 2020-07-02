@@ -37,6 +37,16 @@ public class Film {
 		this.listaSpettacoli = getSpettacoli(f.getIdFilm());
 	}
 	
+	public Film(FilmDAO f, boolean caricaListaSpettacoli) {
+		this.idFilm = f.getIdFilm();
+		this.titolo = f.getTitolo();
+		this.descrizione = f.getDescrizione();
+		this.anno = f.getAnno();
+		this.regista = f.getRegista();
+		this.locandina = f.getLocandina();
+		this.listaSpettacoli = getSpettacoli(f.getIdFilm());
+	}
+	
 	public Film(int idFilm, String titolo, String descrizione, int anno, String regista, byte[] locandina, List<Spettacolo> listaSpettacoli) {
 		super();
 		this.idFilm = idFilm;
