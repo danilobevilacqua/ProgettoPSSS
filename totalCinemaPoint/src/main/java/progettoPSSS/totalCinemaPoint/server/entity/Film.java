@@ -1,12 +1,13 @@
 package progettoPSSS.totalCinemaPoint.server.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import progettoPSSS.totalCinemaPoint.server.DAO.FilmDAO;
 
 
-public class Film {
+public class Film implements Serializable {
 	
 	private int idFilm;
 	private String titolo;

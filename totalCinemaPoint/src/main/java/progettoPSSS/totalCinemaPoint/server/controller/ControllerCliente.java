@@ -8,19 +8,17 @@ import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Cinema;
 import progettoPSSS.totalCinemaPoint.server.entity.Cliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
+import progettoPSSS.totalCinemaPoint.server.entity.Posto;
+import progettoPSSS.totalCinemaPoint.server.entity.Prenotazione;
+import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 
 public class ControllerCliente implements ServizioCliente {
 	
-	List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
-	
-	@Override
-	public synchronized void prenotaSpettacolo() throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
+	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
+	private Cinema cinema = new Cinema();
 
 	@Override
-	public synchronized void logIn(String username, String password) throws RemoteException {
+	public void logIn(String username, String password) throws RemoteException {
 		// TODO Auto-generated method stub
 		try {
 			Cliente cliente = new Cliente(username, password);
@@ -33,15 +31,52 @@ public class ControllerCliente implements ServizioCliente {
 	}
 
 	@Override
-	public List<String> getFilmTitles() throws RemoteException {
+	public List<Film> getFilm() throws RemoteException {
 		// TODO Auto-generated method stub
-		List<String> listaTitoli = new ArrayList<String>();
+		List<Film> listaFilm = new ArrayList<Film>();
 		
 		/*for( Film f :  Cinema.getFilms() ) {
 			listaTitoli.add(f.getTitolo());		
 		}*/
 		
-		return listaTitoli;
+		listaFilm = cinema.getListaFilms();
+		
+		return listaFilm;
 	}
 
+	@Override
+	public synchronized List<Spettacolo> getSpettacoli(Film filmScelto) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+		filmScelto.addListaSpettacoli();
+		
+		List<Spettacolo> listaSpettacoli = new ArrayList<Spettacolo>();
+		
+		for (Spettacolo s : filmScelto.getListaSpettacoli()) {
+			s.addListaPrenotazioni();
+			
+			int totPostiPrenotati = 0;
+			
+			for (Prenotazione p : s.getListaPrenotazioni()) {
+				totPostiPrenotati += p.getlistaPostiPrenotati().size();
+			}
+			
+			if(totPostiPrenotati < 100) {
+				listaSpettacoli.add(s);
+			}
+		}
+		
+		return listaSpettacoli;
+	}
+
+	@Override
+	public synchronized boolean prenotaSpettacolo(Spettacolo spettacoloScelto, List<Posto> postiScelti) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+		for (Prenotazione p : spettacoloScelto.getListaPrenotazioni()) {
+		}
+			
+		
+		return false;
+	}
 }

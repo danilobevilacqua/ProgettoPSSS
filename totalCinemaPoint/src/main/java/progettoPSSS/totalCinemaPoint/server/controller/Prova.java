@@ -3,6 +3,7 @@ package progettoPSSS.totalCinemaPoint.server.controller;
 import java.rmi.RemoteException;
 
 import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
+import progettoPSSS.totalCinemaPoint.server.entity.Film;
 
 public class Prova {
 
@@ -13,8 +14,8 @@ public class Prova {
 			sc.logIn("walterwhite", "walter");
 			System.out.println("Log in effettuato!");
 			
-			for(String s : sc.getFilmTitles())
-				System.out.println(s);
+			for(Film f : sc.getFilm())
+				System.out.println(f.getTitolo() + f.getAnno());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
