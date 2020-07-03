@@ -98,7 +98,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		try {
 			listaFilmJSON = om.writeValueAsString(listaFilm);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 			throw new RemoteException("Impossibile inviare lista di film");
 		}

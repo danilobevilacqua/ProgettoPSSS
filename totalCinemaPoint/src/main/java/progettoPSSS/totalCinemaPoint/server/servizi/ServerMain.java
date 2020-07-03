@@ -20,7 +20,7 @@ import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 public class ServerMain {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 		try {
 			Registry r = LocateRegistry.getRegistry();
 			ServizioPagamento sp = (ServizioPagamento) r.lookup("pagamento");
@@ -137,13 +137,13 @@ public class ServerMain {
 			
 			
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		}
 	}
