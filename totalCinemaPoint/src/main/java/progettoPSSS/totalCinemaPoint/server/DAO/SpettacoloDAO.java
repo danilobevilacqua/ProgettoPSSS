@@ -1,7 +1,9 @@
 package progettoPSSS.totalCinemaPoint.server.DAO;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -39,7 +41,7 @@ public class SpettacoloDAO {
 		super();
 		this.idSpettacolo = 0;
 		this.data = new java.sql.Date(System.currentTimeMillis());
-		this.ora = "";
+		this.ora = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 		this.prezzo = 0.0;
 		this.idFilm_fk = 0;
 		this.nomeSala_fk = "";
