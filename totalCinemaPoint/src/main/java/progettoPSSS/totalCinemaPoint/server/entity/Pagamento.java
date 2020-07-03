@@ -63,8 +63,4 @@ public class Pagamento {
 		this.codicePrenotazione = codicePrenotazione;
 	}
 	
-	
-	
-	
-
 }
