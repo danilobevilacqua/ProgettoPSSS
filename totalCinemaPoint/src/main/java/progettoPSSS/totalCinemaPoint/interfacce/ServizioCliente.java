@@ -10,7 +10,7 @@ import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 
 public interface ServizioCliente extends Remote {
 	void logIn(String username, String password) throws RemoteException;
-	List<Film> getFilm() throws RemoteException;
-	List<Spettacolo> getSpettacoli(Film filmScelto) throws RemoteException;
-	boolean prenotaSpettacolo(Spettacolo spettacoloScelto, List<Posto> postiScelti) throws RemoteException;
+	String getFilm() throws RemoteException;
+	String getSpettacoli(String filmSceltoJSON) throws RemoteException;
+	boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON) throws RemoteException;
 }

@@ -13,6 +13,34 @@ public class PostoPrenotato {
 	private String tipo;
 	
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nomeSala == null) ? 0 : nomeSala.hashCode());
+		result = prime * result + numeroPosto;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PostoPrenotato other = (PostoPrenotato) obj;
+		if (nomeSala == null) {
+			if (other.nomeSala != null)
+				return false;
+		} else if (!nomeSala.equals(other.nomeSala))
+			return false;
+		if (numeroPosto != other.numeroPosto)
+			return false;
+		return true;
+	}
+
 	public PostoPrenotato() {
 		super();
 		this.codicePrenotazione = 0;
