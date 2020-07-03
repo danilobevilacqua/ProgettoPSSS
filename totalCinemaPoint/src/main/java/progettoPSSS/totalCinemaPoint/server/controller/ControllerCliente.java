@@ -19,20 +19,18 @@ public class ControllerCliente implements ServizioCliente {
 
 	@Override
 	public void logIn(String username, String password) throws RemoteException {
-		// TODO Auto-generated method stub
 		try {
 			Cliente cliente = new Cliente(username, password);
 			listaClientiLoggati.add(cliente);
 		} catch (Exception e) {
 			//System.out.println("Log in fallito!");
-			throw new RemoteException("Log in fallito");
+			throw new RemoteException("Log-in fallito! ");
 		}
 		
 	}
 
 	@Override
 	public List<Film> getFilm() throws RemoteException {
-		// TODO Auto-generated method stub
 		List<Film> listaFilm = new ArrayList<Film>();
 		
 		/*for( Film f :  Cinema.getFilms() ) {
@@ -46,8 +44,7 @@ public class ControllerCliente implements ServizioCliente {
 
 	@Override
 	public synchronized List<Spettacolo> getSpettacoli(Film filmScelto) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+
 		filmScelto.addListaSpettacoli();
 		
 		List<Spettacolo> listaSpettacoli = new ArrayList<Spettacolo>();
@@ -71,12 +68,10 @@ public class ControllerCliente implements ServizioCliente {
 
 	@Override
 	public synchronized boolean prenotaSpettacolo(Spettacolo spettacoloScelto, List<Posto> postiScelti) throws RemoteException {
-		// TODO Auto-generated method stub
 		
 		for (Prenotazione p : spettacoloScelto.getListaPrenotazioni()) {
 		}
-			
-		
+				
 		return false;
 	}
 }
