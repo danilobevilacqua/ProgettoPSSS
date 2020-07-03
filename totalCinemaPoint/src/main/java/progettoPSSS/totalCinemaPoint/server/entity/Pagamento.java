@@ -1,8 +1,8 @@
 package progettoPSSS.totalCinemaPoint.server.entity;
 
 import java.sql.Date;
-
-import javax.persistence.Column;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import progettoPSSS.totalCinemaPoint.server.DAO.PagamentoDAO;
 
@@ -11,24 +11,25 @@ public class Pagamento {
 	private int idPagamento;
 	private Date data;
 	private String ora;
+	private Double importo;
 	private int codicePrenotazione;
 	
 	
 	public Pagamento() {
 		super();
 		this.idPagamento = 0;
-		this.data = new java.sql.Date(System.currentTimeMillis());;
-		this.ora = "";
+		this.data = new java.sql.Date(System.currentTimeMillis());
+		this.ora = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+		this.importo = 0.0;
 		this.codicePrenotazione = 0;
 	}
 	
-	public Pagamento(int idPagamento, Date data, String ora, int codicePrenotazione) {
-		super();
-		this.idPagamento = idPagamento;
+	public Pagamento(Date data, String ora, Double importo, int codicePrenotazione) {
 		this.data = data;
 		this.ora = ora;
+		this.importo = importo;
 		this.codicePrenotazione = codicePrenotazione;
-		PagamentoDAO pagamento = new PagamentoDAO(idPagamento,data,ora,codicePrenotazione);		
+		PagamentoDAO pagamento = new PagamentoDAO(data,ora,importo,codicePrenotazione);		
 	}
 	
 	public int getIdPagamento() {
@@ -48,6 +49,12 @@ public class Pagamento {
 	}
 	public void setOra(String ora) {
 		this.ora = ora;
+	}
+	public Double getImporto() {
+		return importo;
+	}
+	public void setImporto(Double importo) {
+		this.importo = importo;
 	}
 	public int getCodicePrenotazione() {
 		return codicePrenotazione;

@@ -21,8 +21,6 @@ public class PrenotazioneDAO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codice", nullable = false)
 	private int codice;
-	@Column(name = "importo", nullable = false)
-	private Double importo;
 	@Column(name = "Clienti_username", nullable = false)
 	private String usernameCliente_fk;
 	@Column(name = "Spettacoli_idSpettacolo", nullable = false)
@@ -32,7 +30,6 @@ public class PrenotazioneDAO {
 	public PrenotazioneDAO() {
 		super();
 		this.codice = 0;
-		this.importo = 0.0;
 		this.usernameCliente_fk = "";
 		this.idSpettacolo_fk = 0;
 		this.listaPostiPrenotati = new ArrayList<PostoPrenotatoDAO>();
@@ -46,14 +43,12 @@ public class PrenotazioneDAO {
 	    session.close();
 	    
 		this.codice = p.getCodice();
-		this.importo = p.getImporto();
 		this.usernameCliente_fk = p.getUsernameCliente_fk();
 		this.idSpettacolo_fk = p.getIdSpettacolo_fk();
 	}
 	
-	public PrenotazioneDAO(Double importo, String usernameCliente_fk, int idSpettacolo_fk) {
+	public PrenotazioneDAO(String usernameCliente_fk, int idSpettacolo_fk) {
 		super();
-		this.importo = importo;
 		this.usernameCliente_fk = usernameCliente_fk;
 		this.idSpettacolo_fk = idSpettacolo_fk;
 	}
@@ -63,12 +58,6 @@ public class PrenotazioneDAO {
 	}
 	public void setCodice(int codice) {
 		this.codice = codice;
-	}
-	public Double getImporto() {
-		return importo;
-	}
-	public void setImporto(Double importo) {
-		this.importo = importo;
 	}
 	public String getUsernameCliente_fk() {
 		return usernameCliente_fk;

@@ -23,18 +23,22 @@ public class PostoPrenotatoDAO implements Serializable{
 	@Id
 	@Column(name = "Posti_Sale_nome", nullable = false)
 	private String nomeSala_fk;
+	@Column(name = "tipoOccupazione", nullable = false)
+	private String tipo;
 	
 	public PostoPrenotatoDAO() {
 		super();
 		this.codicePrenotazione_fk = 0;
 		this.numeroPosto_fk = 0;
 		this.nomeSala_fk = "";
+		this.tipo="";
 	}
 	
-	public PostoPrenotatoDAO(int codicePrenotazione_fk, int numeroPosto_fk, String nomeSala_fk) {
+	public PostoPrenotatoDAO(int codicePrenotazione_fk, int numeroPosto_fk, String nomeSala_fk,String tipo) {
 		this.codicePrenotazione_fk = codicePrenotazione_fk;
 		this.numeroPosto_fk = numeroPosto_fk;
 		this.nomeSala_fk = nomeSala_fk;
+		this.tipo=tipo;
 		savePostiPrenotati();
 	}
 	
@@ -55,8 +59,15 @@ public class PostoPrenotatoDAO implements Serializable{
 	}
 	public void setNomeSala_fk(String nomeSala_fk) {
 		this.nomeSala_fk = nomeSala_fk;
+	}	
+	public String getTipo() {
+		return tipo;
 	}
-	
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public PostoPrenotatoDAO savePostiPrenotati() {
 		  Session session = HibernateConnectionManager.getSessionFactory().openSession();
 		  session.beginTransaction();

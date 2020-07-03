@@ -23,14 +23,18 @@ public class PagamentoDAO {
 	private Date data;
 	@Column(name = "ora", nullable = false)
 	private String ora;
+	@Column(name = "importo", nullable = false)
+	private Double importo;
 	@Column(name = "Prenotazioni_codice", nullable = false)
 	private int codicePrenotazione_fk;
+	
 	
 	public PagamentoDAO() {
 		super();
 		this.idPagamento = 0;
 		this.data = new java.sql.Date(System.currentTimeMillis());
 		this.ora = "";
+		this.importo = 0.0;
 		this.codicePrenotazione_fk = 0;
 	}
 	
@@ -42,16 +46,17 @@ public class PagamentoDAO {
 		this.idPagamento = p.getIdPagamento();
 		this.data = p.getData();
 		this.ora = p.getOra();
+		this.importo = p.getImporto();
 		this.codicePrenotazione_fk = p.getCodicePrenotazione_fk();
 	}
 	
-	public PagamentoDAO(int idPagamento, Date data, String ora, int codicePrenotazione_fk) {
+	public PagamentoDAO( Date data, String ora,Double importo, int codicePrenotazione_fk) {
 		super();
-		this.idPagamento = idPagamento;
 		this.data = data;
 		this.ora = ora;
+		this.importo = importo;
 		this.codicePrenotazione_fk = codicePrenotazione_fk;
-		savePagamento();
+		this.idPagamento = savePagamento();
 	}
 	
 	public int getIdPagamento() {
@@ -71,6 +76,12 @@ public class PagamentoDAO {
 	}
 	public void setOra(String ora) {
 		this.ora = ora;
+	}
+	public Double getImporto() {
+		return importo;
+	}
+	public void setImporto(Double importo) {
+		this.importo = importo;
 	}
 	public int getCodicePrenotazione_fk() {
 		return codicePrenotazione_fk;

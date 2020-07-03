@@ -10,6 +10,7 @@ public class PostoPrenotato {
 	private int codicePrenotazione;
 	private int numeroPosto;
 	private String nomeSala;
+	private String tipo;
 	
 	
 	public PostoPrenotato() {
@@ -17,12 +18,14 @@ public class PostoPrenotato {
 		this.codicePrenotazione = 0;
 		this.numeroPosto = 0;
 		this.nomeSala = "";
+		this.tipo = "";
 	}
 	
 	public PostoPrenotato(PostoPrenotatoDAO pp) {
 		this.codicePrenotazione = pp.getCodicePrenotazione_fk();
 		this.numeroPosto = pp.getNumeroPosto_fk();
 		this.nomeSala = pp.getNomeSala_fk();
+		this.tipo = pp.getTipo();
 	}
 	
 		
@@ -44,13 +47,19 @@ public class PostoPrenotato {
 	public void setNomeSala(String nomeSala) {
 		this.nomeSala = nomeSala;
 	}
-	
-	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public static void setPostiPrenotati(List<PostoPrenotato> listaPostiPrenotati, int codice) {
 		
 		for(PostoPrenotato p : listaPostiPrenotati) {
 			p.setCodicePrenotazione(codice);
-			PostoPrenotatoDAO ppd = new PostoPrenotatoDAO(p.getCodicePrenotazione(),p.getNumeroPosto(),p.getNomeSala());
+			PostoPrenotatoDAO ppd = new PostoPrenotatoDAO(p.getCodicePrenotazione(),p.getNumeroPosto(),p.getNomeSala(),p.getTipo());
 		}
 		
 	}

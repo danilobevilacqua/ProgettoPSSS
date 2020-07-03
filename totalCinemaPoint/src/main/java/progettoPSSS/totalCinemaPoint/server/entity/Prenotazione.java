@@ -10,7 +10,6 @@ import progettoPSSS.totalCinemaPoint.server.DAO.SpettacoloDAO;
 public class Prenotazione {
 	
 	private int codice;
-	private Double importo;
 	private String usernameCliente;
 	private int idSpettacolo;
 	private List<PostoPrenotato> listaPostiPrenotati;
@@ -20,7 +19,6 @@ public class Prenotazione {
 	public Prenotazione() {
 		super();
 		this.codice = 0;
-		this.importo = 0.0;
 		this.usernameCliente = "";
 		this.idSpettacolo = 0;
 		this.listaPostiPrenotati = new ArrayList<PostoPrenotato>();
@@ -29,16 +27,16 @@ public class Prenotazione {
 	public Prenotazione(PrenotazioneDAO p) {
 		super();
 		this.codice = p.getCodice();
-		this.importo = p.getImporto();
 		this.usernameCliente = p.getUsernameCliente_fk();
 		this.idSpettacolo = p.getIdSpettacolo_fk();		
 		this.listaPostiPrenotati = getPostiPrenotati(p.getCodice());
 			
 	}
 		
-	public Prenotazione(Double importo, String usernameCliente, int idSpettacolo,List<PostoPrenotato> listaPostiPrenotati) {
-		PrenotazioneDAO pd = new PrenotazioneDAO(importo,usernameCliente,idSpettacolo);
+	public Prenotazione(String usernameCliente, int idSpettacolo,List<PostoPrenotato> listaPostiPrenotati) {
+		PrenotazioneDAO pd = new PrenotazioneDAO(usernameCliente,idSpettacolo);
 		int codicePrenotazione= pd.savePrenotazione();
+		this.codice=codicePrenotazione;
 		PostoPrenotato.setPostiPrenotati(listaPostiPrenotati, codicePrenotazione);
 	}
 
@@ -47,12 +45,6 @@ public class Prenotazione {
 	}
 	public void setCodice(int codice) {
 		this.codice = codice;
-	}
-	public Double getImporto() {
-		return importo;
-	}
-	public void setImporto(Double importo) {
-		this.importo = importo;
 	}
 	public String getUsernameCliente() {
 		return usernameCliente;
