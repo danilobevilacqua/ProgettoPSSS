@@ -1,8 +1,13 @@
 package progettoPSSS.totalCinemaPoint.server.controller;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,60 +15,85 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
+import progettoPSSS.totalCinemaPoint.interfacce.ServizioPagamento;
 import progettoPSSS.totalCinemaPoint.server.entity.Cinema;
 import progettoPSSS.totalCinemaPoint.server.entity.Cliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
-import progettoPSSS.totalCinemaPoint.server.entity.Posto;
+import progettoPSSS.totalCinemaPoint.server.entity.Pagamento;
 import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.server.entity.Prenotazione;
 import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 
-public class ControllerCliente implements ServizioCliente {
+public class ControllerCliente extends UnicastRemoteObject implements ServizioCliente {
 
-	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
+//	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
 	private Cinema cinema = new Cinema();
-/*
-	private String[] [] getLayOutposti(Spettacolo s) {
-		String[][] layOutPosti = new String[10][10];
-
-		s.addListaPrenotazioni();
-		List<Prenotazione> listaPrenotazioni = s.getListaPrenotazioni();
-
-		for (Prenotazione pr : listaPrenotazioni) {
-			List<PostoPrenotato> listaPostiPrenotati = pr.getlistaPostiPrenotati();
-
-			for(PostoPrenotato pp : listaPostiPrenotati) {
-				layOutPosti[(pp.getNumeroPosto() - 1) / 10] [(pp.getNumeroPosto() - 1) % 10] = pp.getTipo();
-			}
-		}		
-
-		return layOutPosti;
+	private ServizioPagamento servizioPagamento;
+	private ObjectMapper om = new ObjectMapper();
+	
+	public ControllerCliente(ServizioPagamento servizioPagamento) throws RemoteException {
+		super();
+		this.servizioPagamento = servizioPagamento;
 	}
-	*/
+	
+	private double calcolaImporto(double prezzo, List<PostoPrenotato> postiScelti) {
+		double prezzoTotale = 0;
+		
+		for (PostoPrenotato pp : postiScelti) {
+			if (pp.getTipo().equals("prenotato")) {
+				prezzoTotale += prezzo;
+			}
+		}
+		return prezzoTotale;
+	}
+
+	private List<PostoPrenotato> postiValidati(Spettacolo spettacolo, List<PostoPrenotato> postiScelti) throws RemoteException {
+		
+		List<PostoPrenotato> listaPostiPrenotati = new ArrayList<PostoPrenotato>();
+		spettacolo.addListaPrenotazioni();
+		
+		for(Prenotazione pr : spettacolo.getListaPrenotazioni())
+			listaPostiPrenotati.addAll(pr.getlistaPostiPrenotati());
+
+		ListIterator<PostoPrenotato> li = postiScelti.listIterator();
+		
+		while (li.hasNext()) {
+			PostoPrenotato pp = li.next();
+			int indice = listaPostiPrenotati.indexOf(pp);
+			if (indice != -1) {
+				PostoPrenotato ppr = listaPostiPrenotati.get(indice);
+				if (pp.getTipo().equals("covid") && ppr.getTipo().equals("covid")) {
+					li.remove();
+				} else if (ppr.getTipo().equals("prenotato") || (ppr.getTipo().equals("covid") && ppr.getTipo().equals("prenotato"))) {
+					throw new RemoteException("Errore il posto di numero " + pp.getNumeroPosto() + " è già stato prenotato oppure è indisponibile per via del distanziamento sociale");
+				}
+			}
+		}
+		return postiScelti;
+	}
 
 	@Override
-	public void logIn(String username, String password) throws RemoteException {
+	public String logIn(String username, String password) throws RemoteException {
+		String clienteJSON = null;
 		try {
 			Cliente cliente = new Cliente(username, password);
-			listaClientiLoggati.add(cliente);
+//			listaClientiLoggati.add(cliente);
+			
+			clienteJSON = om.writeValueAsString(cliente);
 		} catch (Exception e) {
 			//System.out.println("Log in fallito!");
 			throw new RemoteException("Log-in fallito! ");
 		}
-
+		
+		return clienteJSON;
 	}
 
 	@Override
 	public String getFilm() throws RemoteException {
 		List<Film> listaFilm = new ArrayList<Film>();
 
-		/*for( Film f :  Cinema.getFilms() ) {
-			listaTitoli.add(f.getTitolo());		
-		}*/
-
 		listaFilm = cinema.getListaFilms();
 
-		ObjectMapper om = new ObjectMapper();
 		String listaFilmJSON = null;
 		try {
 			listaFilmJSON = om.writeValueAsString(listaFilm);
@@ -80,8 +110,7 @@ public class ControllerCliente implements ServizioCliente {
 	public synchronized String getSpettacoli(String filmSceltoJSON) throws RemoteException {
 
 		Film filmScelto = new Film();
-		ObjectMapper om = new ObjectMapper();
-
+		
 		try {
 			filmScelto = om.readValue(filmSceltoJSON, Film.class);
 		} catch (JsonMappingException e1) {
@@ -123,8 +152,7 @@ public class ControllerCliente implements ServizioCliente {
 	}
 
 	@Override
-	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON) throws RemoteException {
-		ObjectMapper om = new ObjectMapper();
+	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username) throws RemoteException {
 		Spettacolo spettacolo = null;
 		List<PostoPrenotato> postiScelti = null;
 
@@ -140,36 +168,19 @@ public class ControllerCliente implements ServizioCliente {
 			e.printStackTrace();
 			throw new RemoteException("Errore nella lettura dello spettacolo o dei posti scelti");
 		}
-		/*
-		String[][] layOutPosi = getLayOutposti(spettacolo);
-
-		for(PostoPrenotato p : postiScelti) {
-			String tipoPosto = layOutPosi[(p.getNumeroPosto() - 1) / 10] [(p.getNumeroPosto() - 1) % 10];
-
-			if(p.getTipo().equals("prenotato"))
-				if (tipoPosto.equals("prenotato") || tipoPosto.equals("covid"))
-					throw new RemoteException("Errore il posto di numero " + p.getNumeroPosto() + " è già stato prenotato oppure è indisponibile per via del distanziamento sociale");		
-		}
-		 */
-
-		List<PostoPrenotato> listaPostiPrenotati = new ArrayList<PostoPrenotato>();
-		spettacolo.addListaPrenotazioni();
-
-		for(Prenotazione pr : spettacolo.getListaPrenotazioni())
-			listaPostiPrenotati.addAll(pr.getlistaPostiPrenotati());
-
-		for (PostoPrenotato pp : postiScelti) {
-			int indice = listaPostiPrenotati.indexOf(pp);
-			if (indice != -1) {
-				PostoPrenotato ppr = listaPostiPrenotati.get(indice);
-				if (pp.getTipo().equals("covid") && ppr.getTipo().equals("covid")) {
-					postiScelti.remove(pp);
-				} else if (ppr.getTipo().equals("prenotato") || (ppr.getTipo().equals("covid") && pp.getTipo().equals("prenotato"))) {
-					throw new RemoteException("Errore il posto di numero " + pp.getNumeroPosto() + " è già stato prenotato oppure è indisponibile per via del distanziamento sociale");
-				}
-			}
-		}
 		
-		return true;
+		List<PostoPrenotato> listaPostiValidati = postiValidati(spettacolo, postiScelti);
+		double importo = calcolaImporto(spettacolo.getPrezzo(), listaPostiValidati);
+		
+		if (!servizioPagamento.paga(importo))
+			throw new RemoteException("Errore, pagamento non avvenuto");
+		
+		String ora = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        Date data = new java.sql.Date(System.currentTimeMillis());
+        
+		Prenotazione p = new Prenotazione(username, spettacolo.getIdSpettacolo(), listaPostiValidati);
+		Pagamento pagamento = new Pagamento(data, ora, importo, p.getCodice());
+		
+		return false;
 	}
 }
