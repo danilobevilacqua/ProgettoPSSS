@@ -39,33 +39,33 @@ public class Prova {
 			
 			PostoPrenotato pp = new PostoPrenotato();
 			pp.setCodicePrenotazione(2);
-			pp.setNumeroPosto(62);
+			pp.setNumeroPosto(63);
 			pp.setNomeSala("C");
 			pp.setTipo("prenotato");
 			//pp.setPostoPrenotato();
     
 			PostoPrenotato pp2 = new PostoPrenotato();
 			pp2.setCodicePrenotazione(2);
-			pp2.setNumeroPosto(61);
+			pp2.setNumeroPosto(62);
 			pp2.setNomeSala("C");
 			pp2.setTipo("covid");
 			//pp2.setPostoPrenotato();
 			
 			PostoPrenotato pp3 = new PostoPrenotato();
 			pp3.setCodicePrenotazione(2);
-			pp3.setNumeroPosto(63);
+			pp3.setNumeroPosto(64);
 			pp3.setNomeSala("C");
 			pp3.setTipo("covid");
 			
 			PostoPrenotato pp4 = new PostoPrenotato();
 			pp4.setCodicePrenotazione(2);
-			pp4.setNumeroPosto(52);
+			pp4.setNumeroPosto(53);
 			pp4.setNomeSala("C");
 			pp4.setTipo("covid");
 			
 			PostoPrenotato pp5 = new PostoPrenotato();
 			pp5.setCodicePrenotazione(2);
-			pp5.setNumeroPosto(72);
+			pp5.setNumeroPosto(73);
 			pp5.setNomeSala("C");
 			pp5.setTipo("covid");
 
