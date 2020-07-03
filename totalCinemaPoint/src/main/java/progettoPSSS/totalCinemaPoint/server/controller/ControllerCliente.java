@@ -164,12 +164,12 @@ public class ControllerCliente implements ServizioCliente {
 				PostoPrenotato ppr = listaPostiPrenotati.get(indice);
 				if (pp.getTipo().equals("covid") && ppr.getTipo().equals("covid")) {
 					postiScelti.remove(pp);
-				} else if (ppr.getTipo().equals("prenotato") || (ppr.getTipo().equals("covid") && ppr.getTipo().equals("prenotato"))) {
+				} else if (ppr.getTipo().equals("prenotato") || (ppr.getTipo().equals("covid") && pp.getTipo().equals("prenotato"))) {
 					throw new RemoteException("Errore il posto di numero " + pp.getNumeroPosto() + " è già stato prenotato oppure è indisponibile per via del distanziamento sociale");
 				}
 			}
 		}
 		
-		return false;
+		return true;
 	}
 }
