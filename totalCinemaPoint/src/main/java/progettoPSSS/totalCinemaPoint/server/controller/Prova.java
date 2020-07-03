@@ -43,7 +43,7 @@ public class Prova {
 			pp.setNomeSala("C");
 			pp.setTipo("prenotato");
 			//pp.setPostoPrenotato();
-
+    
 			PostoPrenotato pp2 = new PostoPrenotato();
 			pp2.setCodicePrenotazione(2);
 			pp2.setNumeroPosto(61);

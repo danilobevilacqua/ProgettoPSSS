@@ -25,7 +25,7 @@ public class Prova {
 		pp2.setNomeSala("C");
 		pp2.setTipo("covid");
 		//pp2.setPostoPrenotato();
-
+   
 		List<PostoPrenotato>lp = new ArrayList<PostoPrenotato>();
 		lp.add(pp);
 		lp.add(pp2);
