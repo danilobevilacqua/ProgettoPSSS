@@ -1,4 +1,4 @@
-package progettoPSSS.totalCinemaPoint.server.controller;
+package progettoPSSS.totalCinemaPoint.server.businessLogic;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -152,7 +152,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 	}
 
 	@Override
-	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username) throws RemoteException {
+	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username, String numeroConto) throws RemoteException {
 		Spettacolo spettacolo = null;
 		List<PostoPrenotato> postiScelti = null;
 
@@ -172,7 +172,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		List<PostoPrenotato> listaPostiValidati = postiValidati(spettacolo, postiScelti);
 		double importo = calcolaImporto(spettacolo.getPrezzo(), listaPostiValidati);
 		
-		if (!servizioPagamento.paga(importo))
+		if (!servizioPagamento.paga(importo, numeroConto))
 			throw new RemoteException("Errore, pagamento non avvenuto");
 		
 		String ora = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());

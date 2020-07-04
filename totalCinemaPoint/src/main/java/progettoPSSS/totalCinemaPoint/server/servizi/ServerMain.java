@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import progettoPSSS.totalCinemaPoint.interfacce.ServizioPagamento;
-import progettoPSSS.totalCinemaPoint.server.controller.ControllerCliente;
+import progettoPSSS.totalCinemaPoint.server.businessLogic.ControllerCliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
 import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
@@ -132,7 +132,7 @@ public class ServerMain {
 			String spettJson = om.writeValueAsString(s);
 			String ppJson = om.writeValueAsString(lp);
 			
-			boolean flag = sc.prenotaSpettacolo(spettJson, ppJson, "walterwhite");
+			boolean flag = sc.prenotaSpettacolo(spettJson, ppJson, "walterwhite", "123456789");
 			System.out.println("il flag = "+flag);
 			
 			
