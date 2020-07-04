@@ -56,7 +56,7 @@ public class ControllerClientSingleton {
 		return true;
 	}
 	
-	public static List<String> getFilmTitles() throws RemoteException, NotBoundException {
+	public static String getFilmTitles() throws RemoteException, NotBoundException {
 		String listaFilmJSON = getInstance().getFilm();
 		
 		try {
@@ -66,10 +66,10 @@ public class ControllerClientSingleton {
 			e.printStackTrace();
 		}
 		
-		List<String> titoliFilm = new ArrayList<String>();
+		String titoliFilm= new String();
 		
 		for(Film f : listaFilm) 
-			titoliFilm.add(f.getTitolo());
+			titoliFilm = titoliFilm + f.getTitolo()+"\n";
 		
 		return titoliFilm;
 	}

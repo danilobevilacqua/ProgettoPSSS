@@ -26,7 +26,7 @@ public class ServerMain {
 			ServizioPagamento sp = (ServizioPagamento) r.lookup("pagamento");
 			ControllerCliente sc = new ControllerCliente(sp);
 			r.rebind("serviziocliente", sc);
-			sc.logIn("walterwhite", "walter");
+			/*sc.logIn("walterwhite", "walter");
 			System.out.println("Log-in effettuato correttamente!");
 			ObjectMapper om = new ObjectMapper();
 			
@@ -135,14 +135,11 @@ public class ServerMain {
 			boolean flag = sc.prenotaSpettacolo(spettJson, ppJson, "walterwhite", "123456789");
 			System.out.println("il flag = "+flag);
 			
-			
+			*/
 		} catch (RemoteException e) {
 	
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-	
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
 	
 			e.printStackTrace();
 		}
