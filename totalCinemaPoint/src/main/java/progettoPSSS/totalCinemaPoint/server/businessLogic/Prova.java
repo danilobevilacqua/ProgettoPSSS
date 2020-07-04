@@ -1,4 +1,4 @@
-package progettoPSSS.totalCinemaPoint.server.controller;
+package progettoPSSS.totalCinemaPoint.server.businessLogic;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

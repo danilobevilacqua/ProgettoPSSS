@@ -26,7 +26,7 @@ public class PagamentoProva extends UnicastRemoteObject implements ServizioPagam
 	}
 
 	@Override
-	public boolean paga(double importo) throws RemoteException {
+	public boolean paga(double importo, String numeroConto) throws RemoteException {
 		// TODO Auto-generated method stub
 		return true;
 	}
