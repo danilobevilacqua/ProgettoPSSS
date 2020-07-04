@@ -3,7 +3,7 @@ package progettoPSSS.totalCinemaPoint.client.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
+import progettoPSSS.totalCinemaPoint.client.entity.Spettacolo;
 
 public class Film {
 	
