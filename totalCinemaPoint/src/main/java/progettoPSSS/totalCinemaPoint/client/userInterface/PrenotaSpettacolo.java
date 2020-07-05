@@ -188,32 +188,9 @@ public class PrenotaSpettacolo extends JFrame {
 	}
 
 	private void setColorButton(JButton[][] buttons, int index, int jndex) {
-		/*	System.out.println("entrato Prima remove");
-		for(String s: postiCovid) {
-			System.out.println(s);
-			if(buttons[index][jndex].getText().equals(s)) {
-				System.out.println("uguale");
-				//postiCovid.add("mannac");
-			}
-		}
-		if(buttons[index][jndex].getBackground().equals(Color.yellow) ) {
-			postiPrenotati.remove("A 23");
-			System.out.println("entrato DOPO REMOVE "+buttons[index][jndex].getText());
-			for(String s: postiCovid) {
-				System.out.println(s);
-				if(buttons[index][jndex].getText().equals(s)) {
-					System.out.println("uguale");
-				}
-			}
-
-			System.out.println("fine entrato");
-
-		}*/
 
 		if(buttons[index][jndex].getBackground().equals(Color.yellow) ) {
 			boolean flag = postiCovid.remove(buttons[index][jndex].getText());
-			System.out.println("Sono entrato giallo "+flag);
-			
 		}
 
 		buttons[index][jndex].setBackground(Color.blue);
@@ -270,10 +247,6 @@ public class PrenotaSpettacolo extends JFrame {
 			setColorCloseButton(index+1,jndex);
 			setColorCloseButton(index,jndex-1);
 			setColorCloseButton(index,jndex+1);
-		}
-
-		for(String s: postiCovid) {
-			System.out.println(s);
 		}
 
 	}
