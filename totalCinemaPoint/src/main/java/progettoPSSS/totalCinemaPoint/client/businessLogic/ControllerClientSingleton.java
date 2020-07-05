@@ -134,7 +134,7 @@ public class ControllerClientSingleton {
 		
 	}
 	
-	public Map<String, String> getPosti(String data, String ora) {
+	public static Map<String, String> getPosti(String data, String ora) {
 		Map<String, String> mappaPosti = new Hashtable<String, String>();
 		
 		for(Spettacolo s : filmSelezionato.getListaSpettacoli()) {
@@ -149,6 +149,10 @@ public class ControllerClientSingleton {
 		}
 		
 		return mappaPosti;
+	}
+	
+	public static String getNomeSala() {
+		return spettacoloScelto.getNomeSala();
 	}
 	
 }

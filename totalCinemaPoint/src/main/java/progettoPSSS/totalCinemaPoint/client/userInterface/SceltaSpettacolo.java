@@ -3,6 +3,7 @@ package progettoPSSS.totalCinemaPoint.client.userInterface;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -22,6 +23,9 @@ import java.awt.event.ActionListener;
 public class SceltaSpettacolo extends JFrame {
 
 	private JPanel contentPane;
+	private String oraSelezionata;
+	private String dataSelezionata;
+	private String filmSelezionato;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -106,7 +110,7 @@ public class SceltaSpettacolo extends JFrame {
 					dataComboBox.removeAllItems();
 					dataComboBox.addItem("");
 					dataComboBox.setEnabled(false);
-					String filmSelezionato = ((String)filmComboBox.getSelectedItem());
+					filmSelezionato = ((String)filmComboBox.getSelectedItem());
 					if((filmSelezionato!= null) && (!filmSelezionato.isEmpty())) {
 						Set<String> date = ControllerClientSingleton.getSpettacoliDate((String)filmComboBox.getSelectedItem());
 						if(!date.isEmpty()) {
@@ -124,7 +128,7 @@ public class SceltaSpettacolo extends JFrame {
 					oraComboBox.removeAllItems();
 					oraComboBox.addItem("");
 					oraComboBox.setEnabled(false);
-					String dataSelezionata = ((String)dataComboBox.getSelectedItem());
+					dataSelezionata = ((String)dataComboBox.getSelectedItem());
 					if((dataSelezionata!=null)&&(!dataSelezionata.isEmpty())) {
 						List<String> orari = ControllerClientSingleton.getSpettacoliOrari((String)dataComboBox.getSelectedItem());
 						if(!orari.isEmpty()) {
@@ -140,7 +144,7 @@ public class SceltaSpettacolo extends JFrame {
 			oraComboBox.addActionListener(new ActionListener () {
 				public void actionPerformed(ActionEvent e) {
 					confermaButton.setEnabled(false);
-					String oraSelezionata = ((String)oraComboBox.getSelectedItem());
+					oraSelezionata = ((String)oraComboBox.getSelectedItem());
 					if((oraSelezionata != null) && (!oraSelezionata.isEmpty())) {	
 						confermaButton.setEnabled(true);
 					}						
@@ -154,7 +158,8 @@ public class SceltaSpettacolo extends JFrame {
 
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrenotaSpettacolo ps = new PrenotaSpettacolo();
+				Map<String,String> mappa = ControllerClientSingleton.getPosti(dataSelezionata, oraSelezionata);
+				PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
 				ps.setVisible(true);
 				dispose();
 			}
