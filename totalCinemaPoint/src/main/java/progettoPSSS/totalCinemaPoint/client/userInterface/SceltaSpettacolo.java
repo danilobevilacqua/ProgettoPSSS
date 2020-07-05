@@ -154,6 +154,9 @@ public class SceltaSpettacolo extends JFrame {
 
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PrenotaSpettacolo ps = new PrenotaSpettacolo();
+				ps.setVisible(true);
+				dispose();
 			}
 		});
 
