@@ -34,8 +34,8 @@ public class PrenotaSpettacolo extends JFrame {
 	private JPanel contentPane;
 	private int size = 10;
 	private JButton[][] buttons = new JButton[size][size];
-	private Set<String>postiPrenotati= new HashSet<String>();
-	private Set<String>postiCovid= new HashSet<String>();	
+	private static Set<String>postiPrenotati= new HashSet<String>();
+	private static Set<String>postiCovid= new HashSet<String>();	
 	private String sala;
 	private JTextArea postiTextArea;
 
@@ -65,71 +65,71 @@ public class PrenotaSpettacolo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		JLabel postiLabel = new JLabel("Posti Selezionati");
 		postiLabel.setBounds(915, 176, 100, 57);
 		contentPane.add(postiLabel);
-		
+
 		JButton legendaButton = new JButton("");
 		legendaButton.setBackground(Color.BLUE);
 		legendaButton.setEnabled(false);
 		legendaButton.setBounds(1030, 25, 65, 30);
 		contentPane.add(legendaButton);
-		
+
 		JButton legendaButton2 = new JButton("");
 		legendaButton2.setBackground(Color.GREEN);
 		legendaButton2.setEnabled(false);
 		legendaButton2.setBounds(1030, 57, 65, 30);
 		contentPane.add(legendaButton2);
-		
+
 		JButton legendaButton3 = new JButton("");
 		legendaButton3.setBackground(Color.YELLOW);
 		legendaButton3.setEnabled(false);
 		legendaButton3.setBounds(1030, 89, 65, 30);
 		contentPane.add(legendaButton3);
-		
+
 		JButton legendaButton4 = new JButton("");
 		legendaButton4.setBackground(Color.RED);
 		legendaButton4.setEnabled(false);
 		legendaButton4.setBounds(1030, 121, 65, 30);
 		contentPane.add(legendaButton4);
-		
+
 		JButton confermaButton = new JButton("Conferma");
 		confermaButton.setBounds(901, 620, 141, 49);
 		contentPane.add(confermaButton);
-		
+
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
-		
+
 		JLabel selezionatoLabel = new JLabel("Posto selezionato");
 		selezionatoLabel.setBounds(849, 39, 106, 16);
 		contentPane.add(selezionatoLabel);
-		
+
 		JLabel liberoLabel = new JLabel("Posto libero");
 		liberoLabel.setBounds(849, 71, 106, 16);
 		contentPane.add(liberoLabel);
-		
+
 		JLabel covidLabel = new JLabel("Posto per il distanziamento");
 		covidLabel.setBounds(850, 100, 165, 16);
 		contentPane.add(covidLabel);
-		
+
 		JLabel occupatoLabel = new JLabel("Posto occupato");
 		occupatoLabel.setBounds(849, 135, 121, 16);
 		contentPane.add(occupatoLabel);
-		
-		
+
+
 		JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(900, 230, 100, 280);
-        contentPane.add(scrollPane);
-       
-        postiTextArea = new JTextArea();
-        postiTextArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
-        scrollPane.setViewportView(postiTextArea);
-        postiTextArea.setEditable(false);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(900, 230, 100, 280);
+		contentPane.add(scrollPane);
+
+		postiTextArea = new JTextArea();
+		postiTextArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
+		scrollPane.setViewportView(postiTextArea);
+		postiTextArea.setEditable(false);
 
 		sala = ControllerClientSingleton.getNomeSala();
 
@@ -152,7 +152,7 @@ public class PrenotaSpettacolo extends JFrame {
 					final int jndex = j;
 					buttons[i][j].addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
+
 							if(buttons[index][jndex].getBackground().equals(Color.green) || buttons[index][jndex].getBackground().equals(Color.yellow)) {
 
 								setColorButton(buttons, index, jndex);								
@@ -166,18 +166,18 @@ public class PrenotaSpettacolo extends JFrame {
 				}
 			}
 		}
-		
+
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map <String,String> prova = new HashMap<String, String>();
-				
+
 				for(String s : postiPrenotati) {
 					prova.put(s, "prenotato");
 				}
 				for(String s : postiCovid) {
 					prova.put(s, "covid");
 				}
-				
+
 				for(String s : prova.keySet()) {
 					System.out.println(s+" "+prova.get(s));
 				}
@@ -188,12 +188,38 @@ public class PrenotaSpettacolo extends JFrame {
 	}
 
 	private void setColorButton(JButton[][] buttons, int index, int jndex) {
-	
-		
+		/*	System.out.println("entrato Prima remove");
+		for(String s: postiCovid) {
+			System.out.println(s);
+			if(buttons[index][jndex].getText().equals(s)) {
+				System.out.println("uguale");
+				//postiCovid.add("mannac");
+			}
+		}
+		if(buttons[index][jndex].getBackground().equals(Color.yellow) ) {
+			postiPrenotati.remove("A 23");
+			System.out.println("entrato DOPO REMOVE "+buttons[index][jndex].getText());
+			for(String s: postiCovid) {
+				System.out.println(s);
+				if(buttons[index][jndex].getText().equals(s)) {
+					System.out.println("uguale");
+				}
+			}
+
+			System.out.println("fine entrato");
+
+		}*/
+
+		if(buttons[index][jndex].getBackground().equals(Color.yellow) ) {
+			boolean flag = postiCovid.remove(buttons[index][jndex].getText());
+			System.out.println("Sono entrato giallo "+flag);
+			
+		}
+
 		buttons[index][jndex].setBackground(Color.blue);
 		buttons[index][jndex].setForeground(Color.white);
 		postiPrenotati.add(buttons[index][jndex].getText());
-		
+
 
 		if (index == 0 && jndex > 0 && jndex< size -1) {
 			//non deve settare il posto a sinistra 	
@@ -245,7 +271,11 @@ public class PrenotaSpettacolo extends JFrame {
 			setColorCloseButton(index,jndex-1);
 			setColorCloseButton(index,jndex+1);
 		}
-		
+
+		for(String s: postiCovid) {
+			System.out.println(s);
+		}
+
 	}
 
 	private void setColorCloseButton(int index, int jndex) {
@@ -275,7 +305,7 @@ public class PrenotaSpettacolo extends JFrame {
 			}
 		}
 	}
-	
+
 	private void setPostiTextArea() {
 		String postiOccupati="";
 		List<Integer> sortedList = new ArrayList<Integer>();
