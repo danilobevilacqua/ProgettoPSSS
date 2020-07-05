@@ -6,7 +6,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import progettoPSSS.totalCinemaPoint.client.entity.Cliente;
 import progettoPSSS.totalCinemaPoint.client.entity.Film;
+import progettoPSSS.totalCinemaPoint.client.entity.Prenotazione;
 import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
+import progettoPSSS.totalCinemaPoint.client.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.client.entity.Spettacolo;
 
 public class ControllerClientSingleton {
@@ -26,6 +30,7 @@ public class ControllerClientSingleton {
 	static private List<Film> listaFilm;
 	static private int indicefilmSelezionato;
 	static private Film filmSelezionato;
+	static private Spettacolo spettacoloScelto;
 	
 	private ControllerClientSingleton() {
 		
@@ -126,6 +131,24 @@ public class ControllerClientSingleton {
 		}
 		
 		return listaOrari;
+		
+	}
+	
+	public Map<String, String> getPosti(String data, String ora) {
+		Map<String, String> mappaPosti = new Hashtable<String, String>();
+		
+		for(Spettacolo s : filmSelezionato.getListaSpettacoli()) {
+			if(s.getData().toString().equals(data) && s.getOra().equals(ora))
+				spettacoloScelto = s;
+		}
+		
+		for(Prenotazione p : spettacoloScelto.getListaPrenotazioni()) {
+			for (PostoPrenotato pp : p.getListaPostiPrenotati()) {
+				mappaPosti.put(spettacoloScelto.getNomeSala() + " " + pp.getNumeroPosto(), pp.getTipo());
+			}
+		}
+		
+		return mappaPosti;
 	}
 	
 }
