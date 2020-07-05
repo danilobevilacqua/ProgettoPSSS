@@ -1,10 +1,7 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +11,9 @@ import javax.swing.border.EmptyBorder;
 
 import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
 
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,9 +23,6 @@ public class SceltaSpettacolo extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,9 +36,6 @@ public class SceltaSpettacolo extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public SceltaSpettacolo() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,7 +148,6 @@ public class SceltaSpettacolo extends JFrame {
 			});
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			erroreLabel.setVisible(true);
 			e.printStackTrace();
 		}

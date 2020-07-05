@@ -26,9 +26,6 @@ public class LoginCliente extends JFrame {
 	private JTextField userField;
 	private JPasswordField passwordField;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,9 +39,7 @@ public class LoginCliente extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//LOGIN
 	public LoginCliente() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,6 +78,8 @@ public class LoginCliente extends JFrame {
 		contentPane.add(erroreLabel);
 		erroreLabel.setVisible(false);
 		
+		
+		//LOGICA
 		accessButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

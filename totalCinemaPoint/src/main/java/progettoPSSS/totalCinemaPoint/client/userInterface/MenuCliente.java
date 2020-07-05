@@ -15,9 +15,6 @@ public class MenuCliente extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -31,9 +28,6 @@ public class MenuCliente extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MenuCliente() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

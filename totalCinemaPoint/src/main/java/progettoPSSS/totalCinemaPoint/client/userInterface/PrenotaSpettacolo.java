@@ -1,9 +1,7 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,9 +13,6 @@ import javax.swing.JButton;
 public class PrenotaSpettacolo extends JFrame {
 
 	private JPanel contentPane;
-	/**
-	 * Launch the application.
-	 */
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,9 +27,6 @@ public class PrenotaSpettacolo extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PrenotaSpettacolo() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,36 +74,4 @@ public class PrenotaSpettacolo extends JFrame {
 	}
 
 }
-
-/*
-	private void inizialize() {
-		posti = new JPanel();
-		posti.setLayout(new GridLayout(size, size));
-		for(int i=0 ; i<5; i++) {
-			for(int j=0;j<5; j++) {
-				buttonMatrix[i][j]=new JButton();
-				buttonMatrix[i][j].setBackground(new Color(20+i*2,2*40+j,255-i*10));
-				buttonMatrix[i][j].addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {}});
-
-				buttonMatrix[i][j].setSize(20,20);
-				posti.add(buttonMatrix[i][j]);
-			}
-		}
-		validate();
-	}*/
-/*
-	//@Override
-	public void actionPerformed(ActionEvent ae) {
-		for(int i=0 ; i<5; i++) {
-			for(int j=0;j<5; j++) {
-				if(ae.getSource()==buttonMatrix[i][j]) {
-					buttonMatrix[i][j].setBackground(Color.red);
-				}
-			}
-		}
-	}
- */
-
-
 
