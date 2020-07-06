@@ -58,7 +58,7 @@ public class ClientMain extends JFrame {
 		gestoreCinemaButton.setEnabled(false);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientmain2.jpg"));
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientmain2.jpg"));
 		
 		lblNewLabel.setIcon(img);
 		lblNewLabel.setBounds(0, 0, 1117, 686);
