@@ -150,7 +150,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 	}
 
 	@Override
-	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username, String numeroConto, double importo) throws RemoteException {
+	public synchronized int prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username, String numeroConto, double importo) throws RemoteException {
 		Spettacolo spettacolo = null;
 		List<PostoPrenotato> postiScelti = null;
 
@@ -176,7 +176,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		Prenotazione p = new Prenotazione(username, spettacolo.getIdSpettacolo(), listaPostiValidati);
 		Pagamento pagamento = new Pagamento(data, ora, importo, p.getCodice());
 		
-		return false;
+		return p.getCodice();
 	}
 
 }

@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -56,72 +57,74 @@ public class RiepilogoConPagamento extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel sfondoLabel = new JLabel("");
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoConPagamento.jpg"));		
-		
-		final JLabel linkLabel = new JLabel("<HTML><U>RISELEZIONA I POSTI</U></HTML>");
-		linkLabel.setForeground(Color.RED);
-		linkLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		linkLabel.setBounds(738, 517, 202, 31);
-		contentPane.add(linkLabel);
-		linkLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		linkLabel.setVisible(false);
-		
-		
-		final JLabel erroreLabel = new JLabel("TI HANNO FOTTUTO IL POSTO");
-		erroreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		erroreLabel.setForeground(Color.RED);
-		erroreLabel.setBounds(432, 517, 281, 31);
-		contentPane.add(erroreLabel);
-		erroreLabel.setVisible(false);
-		
+
+		final JButton indietroButton = new JButton("Indietro");
+		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		indietroButton.setBounds(50, 620, 141, 49);
+		contentPane.add(indietroButton);
+		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
 		JLabel importoLabel = new JLabel("New label");
 		importoLabel.setForeground(Color.WHITE);
 		importoLabel.setBounds(926, 436, 71, 43);
 		contentPane.add(importoLabel);
-		
-		JButton accessButton = new JButton("Conferma");
-		accessButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		accessButton.setBounds(926, 620, 141, 49);
-		contentPane.add(accessButton);
-		accessButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+		final JButton confermaButton = new JButton("Conferma");
+		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		confermaButton.setBounds(926, 620, 141, 49);
+		contentPane.add(confermaButton);
+		confermaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		sfondoLabel.setIcon(img);
 		sfondoLabel.setBounds(0, 0, 1117, 686);
 		contentPane.add(sfondoLabel);
-		
+
 		final Double prezzo = ControllerClientSingleton.calcolaImporto(mappaPosti);
 		importoLabel.setText(prezzo.toString());
-		
-		accessButton.addActionListener(new ActionListener() {
+
+		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					ControllerClientSingleton.prenota(mappaPosti, prezzo);
+					int codice = ControllerClientSingleton.prenota(mappaPosti, prezzo);			
+					confermaButton.setEnabled(false);
+					indietroButton.setEnabled(false);
+					
+					JOptionPane.showMessageDialog(null, "Prenotazione effettuata con successo! \n Il codice della prenotazione è: "+codice, "Avviso", JOptionPane.INFORMATION_MESSAGE);
+					
+					MenuCliente mc = new MenuCliente();
+					mc.setVisible(true);
+					dispose();
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					erroreLabel.setVisible(true);
-					linkLabel.setVisible(true);
+					confermaButton.setEnabled(false);
+					indietroButton.setEnabled(false);
+					
+					JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
+					tornaSceltaPosto();
 				} 
 			}
 		});
-		
-		
-		
-		linkLabel.addMouseListener(new MouseAdapter(){  
-		    public void mouseClicked(MouseEvent e)  
-		    {
-		    	String [] filmInfo = ControllerClientSingleton.getDatiFilm().split("\n");
-		    	System.out.println(filmInfo[0]);
-		    	ControllerClientSingleton.getSpettacoliDate(filmInfo[0]);
-		    	Map<String,String> mappa = ControllerClientSingleton.getPosti(ControllerClientSingleton.getDataSpettacoloSelezionato(), ControllerClientSingleton.getOraSpettacoloSelezionato());
-				PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
-				ps.setVisible(true);
-				dispose();
-		    }  
-		});
-		
-		
-		
+
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tornaSceltaPosto();
+			}
+		});		
+
 	}
+	
+	private void tornaSceltaPosto() {
+		String [] filmInfo = ControllerClientSingleton.getDatiFilm().split("\n");
+		System.out.println(filmInfo[0]);
+		ControllerClientSingleton.getSpettacoliDate(filmInfo[0]);
+		Map<String,String> mappa = ControllerClientSingleton.getPosti(ControllerClientSingleton.getDataSpettacoloSelezionato(), ControllerClientSingleton.getOraSpettacoloSelezionato());
+		PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
+		ps.setVisible(true);
+		dispose();
+	}
+
 }

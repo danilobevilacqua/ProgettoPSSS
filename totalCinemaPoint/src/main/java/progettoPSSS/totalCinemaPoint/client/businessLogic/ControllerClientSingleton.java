@@ -169,7 +169,7 @@ public class ControllerClientSingleton {
 		return prezzoTotale;
 	}
 	
-	public static void prenota(Map<String, String> mappaPosti, double prezzo) throws JsonProcessingException, RemoteException {
+	public static int prenota(Map<String, String> mappaPosti, double prezzo) throws JsonProcessingException, RemoteException {
 		String spettacoloSceltoJSON = om.writeValueAsString(spettacoloScelto);
 		String postiSceltiJSON;
 		
@@ -185,7 +185,7 @@ public class ControllerClientSingleton {
 		
 		postiSceltiJSON = om.writeValueAsString(listaPostiPrenotati);
 		
-		sc.prenotaSpettacolo(spettacoloSceltoJSON, postiSceltiJSON, cliente.getUsername(), cliente.getNumeroCartaCredito(), prezzo);	
+		return sc.prenotaSpettacolo(spettacoloSceltoJSON, postiSceltiJSON, cliente.getUsername(), cliente.getNumeroCartaCredito(), prezzo);	
 	}
 		
 	public static byte[] getLocandinaFilm() {
