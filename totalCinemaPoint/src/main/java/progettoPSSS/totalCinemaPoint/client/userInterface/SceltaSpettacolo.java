@@ -20,6 +20,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("all")
 public class SceltaSpettacolo extends JFrame {
 
 	private JPanel contentPane;

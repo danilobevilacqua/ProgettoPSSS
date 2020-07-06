@@ -1,6 +1,6 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("all")
 public class MenuCliente extends JFrame {
 
 	private JPanel contentPane;

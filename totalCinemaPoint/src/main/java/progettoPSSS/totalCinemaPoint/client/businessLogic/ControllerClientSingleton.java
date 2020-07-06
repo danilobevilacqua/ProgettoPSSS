@@ -23,6 +23,7 @@ import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
 import progettoPSSS.totalCinemaPoint.client.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.client.entity.Spettacolo;
 
+@SuppressWarnings("all")
 public class ControllerClientSingleton {
 	static private ServizioCliente sc;
 	static private ObjectMapper om = new ObjectMapper();
@@ -51,10 +52,8 @@ public class ControllerClientSingleton {
 		try {
 			cliente = om.readValue(clienteJSON, Cliente.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -67,7 +66,6 @@ public class ControllerClientSingleton {
 		try {
 			listaFilm = om.readValue(listaFilmJSON, new TypeReference<List<Film>> () {});
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -101,13 +99,10 @@ public class ControllerClientSingleton {
 			List<Spettacolo> listaSpettacoli = om.readValue(listaSpettacoliJSON, new TypeReference<List<Spettacolo>>() {});
 			filmSelezionato.setListaSpettacoli(listaSpettacoli);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -116,7 +111,6 @@ public class ControllerClientSingleton {
 		for(Spettacolo s : filmSelezionato.getListaSpettacoli()) {
 			setDateSpettacoli.add(s.getData().toString());
 		}
-		
 		
 		return setDateSpettacoli;
 		

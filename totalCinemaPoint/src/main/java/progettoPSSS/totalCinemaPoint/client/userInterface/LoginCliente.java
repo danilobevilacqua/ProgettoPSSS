@@ -1,6 +1,5 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,12 +13,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
 
+@SuppressWarnings("all")
 public class LoginCliente extends JFrame {
 
 	private JPanel contentPane;

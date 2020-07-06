@@ -133,6 +133,7 @@ public class PrenotaSpettacolo extends JFrame {
 
 		sala = ControllerClientSingleton.getNomeSala();
 
+		//LOGICA
 		for ( int i = 0; i < size; i++) {
 			for ( int j = 0; j < size; j++) {
 				buttons[i][j] = new JButton(sala+" "+(i+1+j*10));

@@ -114,11 +114,9 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		try {
 			filmScelto = om.readValue(filmSceltoJSON, Film.class);
 		} catch (JsonMappingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			throw new RemoteException("Errore nella lettura del film scelto");
 		} catch (JsonProcessingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			throw new RemoteException("Errore nella lettura del film scelto");
 		}
@@ -145,7 +143,6 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		try {
 			return om.writeValueAsString(listaSpettacoli);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RemoteException("Impossibile inviare lista di spettacoli");
 		}
@@ -160,11 +157,9 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 			spettacolo = om.readValue(spettacoloSceltoJSON, Spettacolo.class);
 			postiScelti = om.readValue(postiSceltiJSON, new TypeReference<List<PostoPrenotato>> () {});
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RemoteException("Errore nella lettura dello spettacolo o dei posti scelti");
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RemoteException("Errore nella lettura dello spettacolo o dei posti scelti");
 		}
