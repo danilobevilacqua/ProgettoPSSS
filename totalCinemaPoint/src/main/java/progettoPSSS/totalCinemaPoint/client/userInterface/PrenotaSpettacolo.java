@@ -184,6 +184,14 @@ public class PrenotaSpettacolo extends JFrame {
 				}
 			}
 		});
+		
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SceltaSpettacolo s = new SceltaSpettacolo();
+				s.setVisible(true);
+				dispose();
+			}
+		});
 
 
 	}

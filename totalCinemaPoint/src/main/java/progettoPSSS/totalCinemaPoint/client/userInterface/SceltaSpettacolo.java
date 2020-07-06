@@ -86,6 +86,10 @@ public class SceltaSpettacolo extends JFrame {
 		confermaButton.setBounds(860, 587, 159, 72);
 		contentPane.add(confermaButton);
 		confermaButton.setEnabled(false);
+		
+		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setBounds(50, 620, 141, 49);
+		contentPane.add(indietroButton);
 
 		JLabel erroreLabel = new JLabel("Ci sono problemi di linea, Controlla la tua connessione!");
 		erroreLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
@@ -162,6 +166,14 @@ public class SceltaSpettacolo extends JFrame {
 				Map<String,String> mappa = ControllerClientSingleton.getPosti(dataSelezionata, oraSelezionata);
 				PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
 				ps.setVisible(true);
+				dispose();
+			}
+		});
+		
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MenuCliente m = new MenuCliente();
+				m.setVisible(true);
 				dispose();
 			}
 		});

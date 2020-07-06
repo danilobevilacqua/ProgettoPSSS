@@ -52,11 +52,23 @@ public class MenuCliente extends JFrame {
 		visualizzaButton.setEnabled(false);
 		visualizzaButton.setBounds(647, 396, 352, 115);
 		contentPane.add(visualizzaButton);
+		
+		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setBounds(50, 620, 141, 49);
+		contentPane.add(indietroButton);
 
 		sceltaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SceltaSpettacolo s = new SceltaSpettacolo();
 				s.setVisible(true);
+				dispose();
+			}
+		});
+		
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoginCliente l = new LoginCliente();
+				l.setVisible(true);
 				dispose();
 			}
 		});

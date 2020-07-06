@@ -76,6 +76,10 @@ public class LoginCliente extends JFrame {
 		contentPane.add(erroreLabel);
 		erroreLabel.setVisible(false);
 		
+		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setBounds(50, 620, 141, 49);
+		contentPane.add(indietroButton);
+		
 		
 		//LOGICA
 		accessButton.addActionListener(new ActionListener() {
@@ -90,6 +94,14 @@ public class LoginCliente extends JFrame {
 					e1.printStackTrace();
 					erroreLabel.setVisible(true);
 				}
+			}
+		});
+		
+		indietroButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClientMain cm = new ClientMain();
+				cm.setVisible(true);
+				dispose();
 			}
 		});
 	}
