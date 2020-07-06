@@ -187,24 +187,23 @@ public class ControllerClientSingleton {
 		
 		sc.prenotaSpettacolo(spettacoloSceltoJSON, postiSceltiJSON, cliente.getUsername(), cliente.getNumeroCartaCredito(), prezzo);	
 	}
-	
-	public static void getPostiSpettacolo() throws RemoteException, JsonMappingException, JsonProcessingException {
-		String listaPrenotazioniJSON = sc.getPostiSpettacolo(spettacoloScelto.getIdSpettacolo());
-		List<Prenotazione> listaPrenotazioni = om.readValue(listaPrenotazioniJSON, new TypeReference<List<Prenotazione>>() {});
 		
-		spettacoloScelto.setListaPrenotazioni(listaPrenotazioni);
-		
-	}
-	
 	public static byte[] getLocandinaFilm() {
 		return filmSelezionato.getLocandina();
 	}
 	
-	public String getDatiFilm() {
+	public static String getDatiFilm() {
 		return filmSelezionato.getTitolo() + "\n" + filmSelezionato.getAnno() + "\n" + filmSelezionato.getRegista() + "\n" +  filmSelezionato.getDescrizione() + "\n";
 	}
 	
 	public double getPrezzoSpettacolo() {
 		return spettacoloScelto.getPrezzo();
+	}
+	
+	public static String getDataSpettacoloSelezionato() {
+		return spettacoloScelto.getData().toString();
+	}
+	public static String getOraSpettacoloSelezionato() {
+		return spettacoloScelto.getOra();
 	}
 }

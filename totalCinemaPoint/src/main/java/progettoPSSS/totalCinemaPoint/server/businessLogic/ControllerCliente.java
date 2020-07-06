@@ -179,17 +179,4 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		return false;
 	}
 
-	@Override
-	public String getPostiSpettacolo(int idSpettacolo) throws RemoteException {
-		// TODO Auto-generated method stub
-		Spettacolo spettacolo = new Spettacolo();
-		
-		spettacolo.getPrenotazioni(idSpettacolo);
-		
-		try {
-			return om.writeValueAsString(spettacolo.getListaPrenotazioni());
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			throw new RemoteException("Impossibile ottenere lista prenotazioni");		}
-	}
 }

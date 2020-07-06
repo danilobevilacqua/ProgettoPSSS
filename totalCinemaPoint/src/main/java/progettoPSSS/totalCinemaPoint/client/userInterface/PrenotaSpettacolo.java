@@ -170,20 +170,24 @@ public class PrenotaSpettacolo extends JFrame {
 
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Map <String,String> prova = new HashMap<String, String>();
+				Map <String,String> mappaPosti = new HashMap<String, String>();
 
 				for(String s : postiPrenotati) {
-					prova.put(s, "prenotato");
+					mappaPosti.put(s, "prenotato");
 				}
 				for(String s : postiCovid) {
-					prova.put(s, "covid");
+					mappaPosti.put(s, "covid");
 				}
-
-				for(String s : prova.keySet()) {
-					System.out.println(s+" "+prova.get(s));
-				}
+				
+				postiPrenotati.clear();
+				postiCovid.clear();				
+				RiepilogoConPagamento rcp = new RiepilogoConPagamento(mappaPosti);
+				rcp.setVisible(true);
+				dispose();
 			}
 		});
+		
+		
 		
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
