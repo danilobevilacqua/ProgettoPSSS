@@ -36,6 +36,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		this.servizioPagamento = servizioPagamento;
 	}
 	
+	/*
 	private double calcolaImporto(double prezzo, List<PostoPrenotato> postiScelti) {
 		double prezzoTotale = 0;
 		
@@ -46,7 +47,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		}
 		return prezzoTotale;
 	}
-
+*/
 	private List<PostoPrenotato> postiValidati(Spettacolo spettacolo, List<PostoPrenotato> postiScelti) throws RemoteException {
 		
 		List<PostoPrenotato> listaPostiPrenotati = new ArrayList<PostoPrenotato>();
@@ -149,7 +150,7 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 	}
 
 	@Override
-	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username, String numeroConto) throws RemoteException {
+	public synchronized boolean prenotaSpettacolo(String spettacoloSceltoJSON, String postiSceltiJSON, String username, String numeroConto, double importo) throws RemoteException {
 		Spettacolo spettacolo = null;
 		List<PostoPrenotato> postiScelti = null;
 
@@ -165,7 +166,6 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		}
 		
 		List<PostoPrenotato> listaPostiValidati = postiValidati(spettacolo, postiScelti);
-		double importo = calcolaImporto(spettacolo.getPrezzo(), listaPostiValidati);
 		
 		if (!servizioPagamento.paga(importo, numeroConto))
 			throw new RemoteException("Errore, pagamento non avvenuto");
@@ -177,5 +177,19 @@ public class ControllerCliente extends UnicastRemoteObject implements ServizioCl
 		Pagamento pagamento = new Pagamento(data, ora, importo, p.getCodice());
 		
 		return false;
+	}
+
+	@Override
+	public String getPostiSpettacolo(int idSpettacolo) throws RemoteException {
+		// TODO Auto-generated method stub
+		Spettacolo spettacolo = new Spettacolo();
+		
+		spettacolo.getPrenotazioni(idSpettacolo);
+		
+		try {
+			return om.writeValueAsString(spettacolo.getListaPrenotazioni());
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			throw new RemoteException("Impossibile ottenere lista prenotazioni");		}
 	}
 }

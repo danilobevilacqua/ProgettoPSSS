@@ -149,4 +149,62 @@ public class ControllerClientSingleton {
 		return spettacoloScelto.getNomeSala();
 	}
 	
+	/*
+	public static void prenota(Map <String,String> mappaPosti) {
+		String username = cliente.getUsername();
+		String numeroConto = cliente.getNumeroCartaCredito();
+		String spettacoloJSON = om.
+	}
+	*/
+	
+	public static double calcolaImporto(Map <String,String> mappaPosti) {
+		double prezzoTotale = 0;
+		double prezzo = spettacoloScelto.getPrezzo();
+		
+		for (String pp : mappaPosti.keySet()) {
+			if (mappaPosti.get(pp).equals("prenotato")) {
+				prezzoTotale += prezzo;
+			}
+		}
+		return prezzoTotale;
+	}
+	
+	public static void prenota(Map<String, String> mappaPosti, double prezzo) throws JsonProcessingException, RemoteException {
+		String spettacoloSceltoJSON = om.writeValueAsString(spettacoloScelto);
+		String postiSceltiJSON;
+		
+		List<PostoPrenotato> listaPostiPrenotati = new ArrayList<PostoPrenotato>();
+		
+		for (String s : mappaPosti.keySet()) {
+			PostoPrenotato pp = new PostoPrenotato();
+			pp.setNomeSala(spettacoloScelto.getNomeSala());
+			pp.setNumeroPosto(Integer.parseInt(s.split(" ")[1]));
+			pp.setTipo(mappaPosti.get(s));
+			listaPostiPrenotati.add(pp);
+		}
+		
+		postiSceltiJSON = om.writeValueAsString(listaPostiPrenotati);
+		
+		sc.prenotaSpettacolo(spettacoloSceltoJSON, postiSceltiJSON, cliente.getUsername(), cliente.getNumeroCartaCredito(), prezzo);	
+	}
+	
+	public static void getPostiSpettacolo() throws RemoteException, JsonMappingException, JsonProcessingException {
+		String listaPrenotazioniJSON = sc.getPostiSpettacolo(spettacoloScelto.getIdSpettacolo());
+		List<Prenotazione> listaPrenotazioni = om.readValue(listaPrenotazioniJSON, new TypeReference<List<Prenotazione>>() {});
+		
+		spettacoloScelto.setListaPrenotazioni(listaPrenotazioni);
+		
+	}
+	
+	public static byte[] getLocandinaFilm() {
+		return filmSelezionato.getLocandina();
+	}
+	
+	public String getDatiFilm() {
+		return filmSelezionato.getTitolo() + "\n" + filmSelezionato.getAnno() + "\n" + filmSelezionato.getRegista() + "\n" +  filmSelezionato.getDescrizione() + "\n";
+	}
+	
+	public double getPrezzoSpettacolo() {
+		return spettacoloScelto.getPrezzo();
+	}
 }
