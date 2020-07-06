@@ -46,7 +46,6 @@ public class ClientMain extends JFrame {
 		
 		
 		JButton clienteButton = new JButton("CLIENTI");
-		clienteButton.setBackground(new Color(139, 0, 0));
 		clienteButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		clienteButton.setBounds(155, 438, 248, 84);
 		contentPane.add(clienteButton);
@@ -58,8 +57,7 @@ public class ClientMain extends JFrame {
 		gestoreCinemaButton.setEnabled(false);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientmain2.jpg"));
-		
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientmain2.jpg"));		
 		lblNewLabel.setIcon(img);
 		lblNewLabel.setBounds(0, 0, 1117, 686);
 		contentPane.add(lblNewLabel);

@@ -11,6 +11,7 @@ import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingle
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -79,6 +80,12 @@ public class LoginCliente extends JFrame {
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/menuapp.jpg"));		
+		lblNewLabel.setIcon(img);
+		lblNewLabel.setBounds(0, 0, 1117, 686);
+		contentPane.add(lblNewLabel);
 		
 		
 		//LOGICA
