@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Cursor;
 
 @SuppressWarnings("all")
 public class ClientMain extends JFrame {
@@ -45,22 +46,24 @@ public class ClientMain extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		JButton clienteButton = new JButton("CLIENTI");
-		clienteButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		clienteButton.setBounds(155, 438, 248, 84);
+		JButton clienteButton = new JButton("Clienti");
+		clienteButton.setFont(new Font("Tahoma", Font.BOLD, 40));
+		clienteButton.setBounds(663, 257, 374, 121);
 		contentPane.add(clienteButton);
+		clienteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JButton gestoreCinemaButton = new JButton("GESTORI");
-		gestoreCinemaButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		gestoreCinemaButton.setBounds(749, 435, 255, 91);
+		JButton gestoreCinemaButton = new JButton("Gestori");
+		gestoreCinemaButton.setFont(new Font("Tahoma", Font.BOLD, 40));
+		gestoreCinemaButton.setBounds(663, 436, 374, 121);
 		contentPane.add(gestoreCinemaButton);
 		gestoreCinemaButton.setEnabled(false);
+		gestoreCinemaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientmain2.jpg"));		
-		lblNewLabel.setIcon(img);
-		lblNewLabel.setBounds(0, 0, 1117, 686);
-		contentPane.add(lblNewLabel);
+		JLabel sfondoLabel = new JLabel("");
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/clientMainofficial.jpg"));		
+		sfondoLabel.setIcon(img);
+		sfondoLabel.setBounds(0, 0, 1117, 686);
+		contentPane.add(sfondoLabel);
 		
 		
 		clienteButton.addActionListener(new ActionListener() {

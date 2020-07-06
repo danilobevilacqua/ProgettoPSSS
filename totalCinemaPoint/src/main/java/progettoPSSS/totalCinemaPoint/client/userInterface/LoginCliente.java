@@ -14,8 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 
 @SuppressWarnings("all")
@@ -49,43 +53,59 @@ public class LoginCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblNewLabel = new JLabel("o");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBounds(880, 625, 25, 33);
+		contentPane.add(lblNewLabel);
+		
+		JLabel registratiLabel = new JLabel("<HTML><U>Registrati</U></HTML>");
+		registratiLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		registratiLabel.setForeground(new Color(255, 255, 255));
+		registratiLabel.setBounds(703, 625, 165, 37);
+		contentPane.add(registratiLabel);
+		registratiLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		registratiLabel.addMouseListener(new MouseAdapter(){  
+		    public void mouseClicked(MouseEvent e)  
+		    {}  
+		}); 
+		
+		
 		userField = new JTextField();
-		userField.setBounds(418, 215, 305, 49);
+		userField.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		userField.setBounds(720, 320, 347, 49);
 		contentPane.add(userField);
 		userField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(418, 300, 305, 49);
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		passwordField.setBounds(720, 450, 347, 49);
 		contentPane.add(passwordField);
 		
-		JLabel userLabel = new JLabel("User");
-		userLabel.setBounds(131, 231, 127, 31);
-		contentPane.add(userLabel);
-		
-		JLabel passwordLabel = new JLabel("password");
-		passwordLabel.setBounds(131, 316, 56, 16);
-		contentPane.add(passwordLabel);
-		
 		JButton accessButton = new JButton("Accedi");
-		accessButton.setBounds(418, 477, 227, 84);
+		accessButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		accessButton.setBounds(926, 620, 141, 49);
 		contentPane.add(accessButton);
+		accessButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		final JLabel erroreLabel = new JLabel("Credenziali non valide, nabbo");
+		final JLabel erroreLabel = new JLabel("Credenziali non valide!");
 		erroreLabel.setForeground(Color.RED);
-		erroreLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
-		erroreLabel.setBounds(260, 597, 633, 62);
+		erroreLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		erroreLabel.setBounds(720, 518, 360, 62);
 		contentPane.add(erroreLabel);
 		erroreLabel.setVisible(false);
 		
 		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
+		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/menuapp.jpg"));		
-		lblNewLabel.setIcon(img);
-		lblNewLabel.setBounds(0, 0, 1117, 686);
-		contentPane.add(lblNewLabel);
+		JLabel sfondoLabel = new JLabel("New label");
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/logincliente.jpg"));		
+		sfondoLabel.setIcon(img);
+		sfondoLabel.setBounds(0, 0, 1117, 686);
+		contentPane.add(sfondoLabel);
 		
 		
 		//LOGICA
