@@ -33,8 +33,10 @@ import javax.swing.JTextPane;
 
 @SuppressWarnings("all")
 public class PrenotaSpettacolo extends JFrame {
-	private static Map<String,String> mappa;
+	
 	private JPanel contentPane;
+	private static String titolo = "TOTAL CINEMA POINT - Prenota Spettacolo";
+	private static Map<String,String> mappa;
 	private int size = 10;
 	private JButton[][] buttons = new JButton[size][size];
 	private static Set<String>postiPrenotati= new HashSet<String>();
@@ -49,6 +51,8 @@ public class PrenotaSpettacolo extends JFrame {
 				try {
 					PrenotaSpettacolo frame = new PrenotaSpettacolo(mappa);
 					frame.setVisible(true);
+					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,6 +64,7 @@ public class PrenotaSpettacolo extends JFrame {
 	 * Create the frame.
 	 */
 	public PrenotaSpettacolo(Map<String, String> mappa) {
+		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1123, 721);
@@ -68,23 +73,20 @@ public class PrenotaSpettacolo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton confermaButton = new JButton("Conferma");
+
+		final JButton confermaButton = new JButton("Conferma");
 		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		confermaButton.setBounds(926, 620, 141, 49);
 		contentPane.add(confermaButton);
 		confermaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		confermaButton.setEnabled(false);
 
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
 		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-	
-		JLabel postiLabel = new JLabel("Posti Selezionati");
-		postiLabel.setBounds(915, 176, 100, 57);
-		contentPane.add(postiLabel);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -95,10 +97,10 @@ public class PrenotaSpettacolo extends JFrame {
 		postiTextArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		scrollPane.setViewportView(postiTextArea);
 		postiTextArea.setEditable(false);
-		
+
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));
-		
-		
+
+
 		sala = ControllerClientSingleton.getNomeSala();
 
 		//LOGICA
@@ -123,25 +125,26 @@ public class PrenotaSpettacolo extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 
 							if(buttons[index][jndex].getBackground().equals(Color.green) || buttons[index][jndex].getBackground().equals(Color.yellow)) {
-
 								setColorButton(buttons, index, jndex);								
 								setPostiTextArea();
+								enableConfermaButton(confermaButton);
 							}else {
 								cancellazionePrenotazionePosto(index, jndex);
 								setPostiTextArea();
+								enableConfermaButton(confermaButton);								
 							}			
 
 						}});
 				}
 			}
 		}
-		
+
 		JLabel sfondoLabel = new JLabel("");		
 		sfondoLabel.setIcon(img);
 		sfondoLabel.setBounds(0, 0, 1117, 686);
-		
+
 		contentPane.add(sfondoLabel);
-		
+
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map <String,String> mappaPosti = new HashMap<String, String>();
@@ -152,7 +155,7 @@ public class PrenotaSpettacolo extends JFrame {
 				for(String s : postiCovid) {
 					mappaPosti.put(s, "covid");
 				}
-				
+
 				postiPrenotati.clear();
 				postiCovid.clear();				
 				RiepilogoConPagamento rcp = new RiepilogoConPagamento(mappaPosti);
@@ -160,9 +163,9 @@ public class PrenotaSpettacolo extends JFrame {
 				dispose();
 			}
 		});
-		
-		
-		
+
+
+
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SceltaSpettacolo s = new SceltaSpettacolo();
@@ -264,6 +267,7 @@ public class PrenotaSpettacolo extends JFrame {
 				}
 			}
 		}
+
 	}
 
 	private void setPostiTextArea() {
@@ -278,6 +282,14 @@ public class PrenotaSpettacolo extends JFrame {
 		}
 		postiTextArea.removeAll();
 		postiTextArea.setText(postiOccupati);
+	}
+
+	private void enableConfermaButton(JButton confermaButton) {
+		if(postiPrenotati.size()>0) {
+			confermaButton.setEnabled(true);
+		}else {
+			confermaButton.setEnabled(false);
+		}
 	}
 }
 

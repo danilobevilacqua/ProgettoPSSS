@@ -29,6 +29,7 @@ public class LoginCliente extends JFrame {
 	private JPanel contentPane;
 	private JTextField userField;
 	private JPasswordField passwordField;
+	private static String titolo = "TOTAL CINEMA POINT - Log-in";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -36,6 +37,8 @@ public class LoginCliente extends JFrame {
 				try {
 					LoginCliente frame = new LoginCliente();
 					frame.setVisible(true);
+					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,6 +48,7 @@ public class LoginCliente extends JFrame {
 
 	//LOGIN
 	public LoginCliente() {
+		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1123, 721);

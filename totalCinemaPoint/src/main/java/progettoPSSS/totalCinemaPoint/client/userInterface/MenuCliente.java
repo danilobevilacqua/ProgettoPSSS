@@ -19,6 +19,7 @@ import java.awt.Font;
 public class MenuCliente extends JFrame {
 
 	private JPanel contentPane;
+	private static String titolo = "TOTAL CINEMA POINT - Menù";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -26,6 +27,8 @@ public class MenuCliente extends JFrame {
 				try {
 					MenuCliente frame = new MenuCliente();
 					frame.setVisible(true);
+					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -34,6 +37,7 @@ public class MenuCliente extends JFrame {
 	}
 
 	public MenuCliente() {
+		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1123, 721);

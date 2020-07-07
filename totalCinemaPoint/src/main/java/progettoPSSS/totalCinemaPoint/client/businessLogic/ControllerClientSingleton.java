@@ -203,9 +203,13 @@ public class ControllerClientSingleton {
 	public static String getDatiFilm() {
 		return filmSelezionato.getTitolo() + "\n" + filmSelezionato.getAnno() + "\n" + filmSelezionato.getRegista() + "\n" +  filmSelezionato.getDescrizione() + "\n";
 	}
-
-	public double getPrezzoSpettacolo() {
-		return spettacoloScelto.getPrezzo();
+	
+	public static String getDatiCliente() {
+		return cliente.getUsername() + "\n" + cliente.getNome() + "\n" + cliente.getCognome();
+	}
+	
+	public static double getPrezzoSpettacolo() {
+		return filmSelezionato.getListaSpettacoli().get(0).getPrezzo();
 	}
 
 	public static String getDataSpettacoloSelezionato() {

@@ -22,6 +22,7 @@ public class ClientMain extends JFrame {
 
 	private JPanel contentPane;
 	private BufferedImage img;
+	private static String titolo = "TOTAL CINEMA POINT";
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -29,6 +30,8 @@ public class ClientMain extends JFrame {
 				try {
 					ClientMain frame = new ClientMain();
 					frame.setVisible(true);
+					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,6 +40,7 @@ public class ClientMain extends JFrame {
 	}
 
 	public ClientMain() {
+		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1123, 721);
