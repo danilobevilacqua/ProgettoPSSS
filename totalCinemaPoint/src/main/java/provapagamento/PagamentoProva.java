@@ -30,5 +30,7 @@ public class PagamentoProva extends UnicastRemoteObject implements ServizioPagam
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+
 
 }

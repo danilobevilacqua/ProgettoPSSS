@@ -1,6 +1,7 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -20,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 @SuppressWarnings("all")
 public class PrenotaSpettacolo extends JFrame {
@@ -66,43 +69,30 @@ public class PrenotaSpettacolo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
-		JLabel postiLabel = new JLabel("Posti Selezionati");
-		postiLabel.setBounds(915, 176, 100, 57);
-		contentPane.add(postiLabel);
-
 		JButton legendaButton = new JButton("");
 		legendaButton.setBackground(Color.BLUE);
 		legendaButton.setEnabled(false);
-		legendaButton.setBounds(1030, 25, 65, 30);
+		legendaButton.setBounds(50, 230, 110, 40);
 		contentPane.add(legendaButton);
 
 		JButton legendaButton2 = new JButton("");
 		legendaButton2.setBackground(Color.GREEN);
 		legendaButton2.setEnabled(false);
-		legendaButton2.setBounds(1030, 57, 65, 30);
+		legendaButton2.setBounds(50, 275, 110, 40);
 		contentPane.add(legendaButton2);
 
 		JButton legendaButton3 = new JButton("");
 		legendaButton3.setBackground(Color.YELLOW);
 		legendaButton3.setEnabled(false);
-		legendaButton3.setBounds(1030, 89, 65, 30);
+		legendaButton3.setBounds(50, 320, 110, 40);
 		contentPane.add(legendaButton3);
 
 		JButton legendaButton4 = new JButton("");
 		legendaButton4.setBackground(Color.RED);
 		legendaButton4.setEnabled(false);
-		legendaButton4.setBounds(1030, 121, 65, 30);
+		legendaButton4.setBounds(50, 365, 110, 40);
 		contentPane.add(legendaButton4);
-
-		JButton confermaButton = new JButton("Conferma");
-		confermaButton.setBounds(901, 620, 141, 49);
-		contentPane.add(confermaButton);
-
-		JButton indietroButton = new JButton("Indietro");
-		indietroButton.setBounds(50, 620, 141, 49);
-		contentPane.add(indietroButton);
-
+		
 		JLabel selezionatoLabel = new JLabel("Posto selezionato");
 		selezionatoLabel.setBounds(849, 39, 106, 16);
 		contentPane.add(selezionatoLabel);
@@ -118,18 +108,43 @@ public class PrenotaSpettacolo extends JFrame {
 		JLabel occupatoLabel = new JLabel("Posto occupato");
 		occupatoLabel.setBounds(849, 135, 121, 16);
 		contentPane.add(occupatoLabel);
+		
+		JButton confermaButton = new JButton("Conferma");
+		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		confermaButton.setBounds(926, 620, 141, 49);
+		contentPane.add(confermaButton);
+		confermaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-
+		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		indietroButton.setBounds(50, 620, 141, 49);
+		contentPane.add(indietroButton);
+		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	
+		JLabel postiLabel = new JLabel("Posti Selezionati");
+		postiLabel.setBounds(915, 176, 100, 57);
+		contentPane.add(postiLabel);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(900, 230, 100, 280);
+		scrollPane.setBounds(970, 230, 100, 280);
 		contentPane.add(scrollPane);
 
 		postiTextArea = new JTextArea();
 		postiTextArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		scrollPane.setViewportView(postiTextArea);
 		postiTextArea.setEditable(false);
+		
+		JLabel sfondoLabel = new JLabel("New label");
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));		
+		sfondoLabel.setIcon(img);
+		sfondoLabel.setBounds(0, 0, 1117, 686);
+		contentPane.add(sfondoLabel);
+		
+		/*JTextPane textPane = new JTextPane();
+		textPane.setBounds(218, 110, 710, 380);
+		contentPane.add(textPane);*/
 
 		sala = ControllerClientSingleton.getNomeSala();
 
@@ -137,7 +152,7 @@ public class PrenotaSpettacolo extends JFrame {
 		for ( int i = 0; i < size; i++) {
 			for ( int j = 0; j < size; j++) {
 				buttons[i][j] = new JButton(sala+" "+(i+1+j*10));
-				buttons[i][j].setBounds(20+i*77, 183+j*42, 75, 40);
+				buttons[i][j].setBounds(229+i*71, 110+j*38, 69, 36);
 				buttons[i][j].setBackground(Color.green);
 				contentPane.add(buttons[i][j]);
 				if(mappa.containsKey(buttons[i][j].getText()) && mappa.get(buttons[i][j].getText()).equals("prenotato")) {

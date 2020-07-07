@@ -1,6 +1,7 @@
 package progettoPSSS.totalCinemaPoint.client.userInterface;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,12 @@ import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingle
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JTextPane;
 
 @SuppressWarnings("all")
 public class SceltaSpettacolo extends JFrame {
@@ -51,45 +54,58 @@ public class SceltaSpettacolo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JTextArea textArea = new JTextArea();
+		/*JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setBounds(288, 65, 501, 341);
-		contentPane.add(textArea);
+		contentPane.add(textArea);*/
 
 		final JComboBox <String> filmComboBox  = new JComboBox<String>();
-		filmComboBox.setBounds(142, 477, 272, 42);
+		filmComboBox.setBounds(140, 50, 270, 40);
 		contentPane.add(filmComboBox);
-
-		JLabel filmLabel = new JLabel("Nome Film");
-		filmLabel.setBounds(12, 477, 159, 42);
-		contentPane.add(filmLabel);
-
-		JLabel dataLabel = new JLabel("Data");
-		dataLabel.setBounds(461, 484, 71, 29);
-		contentPane.add(dataLabel);
+		filmComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		final JComboBox dataComboBox = new JComboBox();
-		dataComboBox.setBounds(525, 477, 104, 42);
+		dataComboBox.setBounds(500, 50, 100, 40);
 		contentPane.add(dataComboBox);
 		dataComboBox.setEnabled(false);
-
+		dataComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		final JComboBox oraComboBox = new JComboBox();
-		oraComboBox.setBounds(775, 477, 104, 42);
+		oraComboBox.setBounds(690, 50, 100, 40);
 		contentPane.add(oraComboBox);
 		oraComboBox.setEnabled(false);
-
-		JLabel oraLabel = new JLabel("ora");
-		oraLabel.setBounds(681, 490, 56, 16);
+		oraComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		JLabel filmLabel = new JLabel("FILM");
+		filmLabel.setForeground(Color.WHITE);
+		filmLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		filmLabel.setBounds(75, 50, 60, 40);
+		contentPane.add(filmLabel);
+		
+		JLabel dataLabel = new JLabel("DATA");
+		dataLabel.setForeground(Color.WHITE);
+		dataLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		dataLabel.setBounds(430, 50, 60, 40);
+		contentPane.add(dataLabel);
+	
+		JLabel oraLabel = new JLabel("ORA");
+		oraLabel.setForeground(Color.WHITE);
+		oraLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		oraLabel.setBounds(620, 50, 60, 40);
 		contentPane.add(oraLabel);
-
+		
 		final JButton confermaButton = new JButton("Conferma");
-		confermaButton.setBounds(860, 587, 159, 72);
+		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		confermaButton.setBounds(926, 620, 141, 49);
 		contentPane.add(confermaButton);
 		confermaButton.setEnabled(false);
+		confermaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JButton indietroButton = new JButton("Indietro");
+		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
+		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		JLabel erroreLabel = new JLabel("Ci sono problemi di linea, Controlla la tua connessione!");
 		erroreLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
@@ -97,12 +113,22 @@ public class SceltaSpettacolo extends JFrame {
 		erroreLabel.setBounds(142, 419, 737, 36);
 		contentPane.add(erroreLabel);
 		erroreLabel.setVisible(false);
+		
+		JLabel sfondoLabel = new JLabel("New label");
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/menucliente.jpg"));		
+		sfondoLabel.setIcon(img);
+		sfondoLabel.setBounds(0, 0, 1117, 686);
+		contentPane.add(sfondoLabel);
+		
+		/*JTextPane textPane = new JTextPane();
+		textPane.setBounds(140, 162, 270, 40);
+		contentPane.add(textPane);*/
 
 
 		//LOGICA
 		try {
 			String titoliFilm = ControllerClientSingleton.getFilmTitles();
-			textArea.setText(titoliFilm);
+		//	textArea.setText(titoliFilm);
 
 			if(!titoliFilm.isEmpty()) {	
 				filmComboBox.addItem("");
