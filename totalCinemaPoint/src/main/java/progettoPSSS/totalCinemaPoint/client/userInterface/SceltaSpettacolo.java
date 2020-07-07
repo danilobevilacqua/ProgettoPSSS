@@ -3,6 +3,7 @@ package progettoPSSS.totalCinemaPoint.client.userInterface;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingle
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -54,84 +56,59 @@ public class SceltaSpettacolo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		/*JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(288, 65, 501, 341);
-		contentPane.add(textArea);*/
-
 		final JComboBox <String> filmComboBox  = new JComboBox<String>();
-		filmComboBox.setBounds(140, 50, 270, 40);
+		filmComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		filmComboBox.setBounds(100, 50, 350, 40);
 		contentPane.add(filmComboBox);
+		filmComboBox.addItem("--FILM--");
 		filmComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		final JComboBox dataComboBox = new JComboBox();
-		dataComboBox.setBounds(500, 50, 100, 40);
+		dataComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dataComboBox.setBounds(500, 50, 150, 40);
 		contentPane.add(dataComboBox);
 		dataComboBox.setEnabled(false);
+		dataComboBox.addItem("--DATA--");
 		dataComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
+
 		final JComboBox oraComboBox = new JComboBox();
-		oraComboBox.setBounds(690, 50, 100, 40);
+		oraComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		oraComboBox.setBounds(700, 50, 100, 40);
 		contentPane.add(oraComboBox);
 		oraComboBox.setEnabled(false);
+		oraComboBox.addItem("--ORA--");
 		oraComboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel filmLabel = new JLabel("FILM");
-		filmLabel.setForeground(Color.WHITE);
-		filmLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		filmLabel.setBounds(75, 50, 60, 40);
-		contentPane.add(filmLabel);
-		
-		JLabel dataLabel = new JLabel("DATA");
-		dataLabel.setForeground(Color.WHITE);
-		dataLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		dataLabel.setBounds(430, 50, 60, 40);
-		contentPane.add(dataLabel);
-	
-		JLabel oraLabel = new JLabel("ORA");
-		oraLabel.setForeground(Color.WHITE);
-		oraLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		oraLabel.setBounds(620, 50, 60, 40);
-		contentPane.add(oraLabel);
-		
+
 		final JButton confermaButton = new JButton("Conferma");
 		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		confermaButton.setBounds(926, 620, 141, 49);
 		contentPane.add(confermaButton);
 		confermaButton.setEnabled(false);
 		confermaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
+
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		indietroButton.setBounds(50, 620, 141, 49);
 		contentPane.add(indietroButton);
 		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		JLabel erroreLabel = new JLabel("Ci sono problemi di linea, Controlla la tua connessione!");
-		erroreLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
-		erroreLabel.setForeground(Color.RED);
-		erroreLabel.setBounds(142, 419, 737, 36);
-		contentPane.add(erroreLabel);
-		erroreLabel.setVisible(false);
-		
-		JLabel sfondoLabel = new JLabel("New label");
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/menucliente.jpg"));		
+
+		JLabel lblNewLabel = new JLabel("");
+		ImageIcon img2 = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/sunset.gif"));		
+		lblNewLabel.setIcon(img2);
+		lblNewLabel.setBounds(868, 211, 212, 224);
+		contentPane.add(lblNewLabel);
+
+		JLabel sfondoLabel = new JLabel("New label");
 		sfondoLabel.setIcon(img);
 		sfondoLabel.setBounds(0, 0, 1117, 686);
 		contentPane.add(sfondoLabel);
 		
-		/*JTextPane textPane = new JTextPane();
-		textPane.setBounds(140, 162, 270, 40);
-		contentPane.add(textPane);*/
-
-
 		//LOGICA
 		try {
 			String titoliFilm = ControllerClientSingleton.getFilmTitles();
-		//	textArea.setText(titoliFilm);
 
 			if(!titoliFilm.isEmpty()) {	
-				filmComboBox.addItem("");
 				for (String s : titoliFilm.split("\n")) {
 					filmComboBox.addItem(s);
 				}				
@@ -139,14 +116,15 @@ public class SceltaSpettacolo extends JFrame {
 			filmComboBox.addActionListener(new ActionListener () {
 				public void actionPerformed(ActionEvent e) {
 					dataComboBox.removeAllItems();
-					dataComboBox.addItem("");
+					dataComboBox.addItem("--DATA--");
 					dataComboBox.setEnabled(false);
 					filmSelezionato = ((String)filmComboBox.getSelectedItem());
-					if((filmSelezionato!= null) && (!filmSelezionato.isEmpty())) {
+					if((filmSelezionato!= null) && (!filmSelezionato.equals("--FILM--"))) {
 						Set<String> date = ControllerClientSingleton.getSpettacoliDate((String)filmComboBox.getSelectedItem());
 						if(!date.isEmpty()) {
-							for (String s : date) {
-								dataComboBox.addItem(s);
+							for (String s : date) {								
+								String data = dataChange(s);
+								dataComboBox.addItem(data);
 							}
 							dataComboBox.setEnabled(true);
 						}
@@ -157,11 +135,13 @@ public class SceltaSpettacolo extends JFrame {
 			dataComboBox.addActionListener(new ActionListener () {
 				public void actionPerformed(ActionEvent e) {
 					oraComboBox.removeAllItems();
-					oraComboBox.addItem("");
+					oraComboBox.addItem("--ORA--");
 					oraComboBox.setEnabled(false);
-					dataSelezionata = ((String)dataComboBox.getSelectedItem());
-					if((dataSelezionata!=null)&&(!dataSelezionata.isEmpty())) {
-						List<String> orari = ControllerClientSingleton.getSpettacoliOrari((String)dataComboBox.getSelectedItem());
+					String dataSelezionataCb = ((String)dataComboBox.getSelectedItem());
+					System.out.println();
+					if((dataSelezionataCb!=null)&&(!dataSelezionataCb.equals("--DATA--"))) {
+						dataSelezionata = dataChange(dataSelezionataCb);
+						 List<String> orari = ControllerClientSingleton.getSpettacoliOrari(dataSelezionata);
 						if(!orari.isEmpty()) {
 							for (String s : orari) {
 								oraComboBox.addItem(s);
@@ -175,27 +155,34 @@ public class SceltaSpettacolo extends JFrame {
 			oraComboBox.addActionListener(new ActionListener () {
 				public void actionPerformed(ActionEvent e) {
 					confermaButton.setEnabled(false);
-					oraSelezionata = ((String)oraComboBox.getSelectedItem());
-					if((oraSelezionata != null) && (!oraSelezionata.isEmpty())) {	
+					oraSelezionata = (String) oraComboBox.getSelectedItem();
+					if((oraSelezionata != null) && (!oraSelezionata.equals("--ORA--"))) {	
 						confermaButton.setEnabled(true);
 					}						
 				}
 			});
 
 		} catch (Exception e) {
-			erroreLabel.setVisible(true);
+			JOptionPane.showMessageDialog(null, "Si sono verificati problemi di linea! \n Controlla la tua connessione", "Avviso", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Map<String,String> mappa = ControllerClientSingleton.getPosti(dataSelezionata, oraSelezionata);
-				PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
-				ps.setVisible(true);
-				dispose();
+				Map<String, String> mappa;
+				try {
+					mappa = ControllerClientSingleton.getPosti(dataSelezionata, oraSelezionata);
+					PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
+					ps.setVisible(true);
+					dispose();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 		});
-		
+
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MenuCliente m = new MenuCliente();
@@ -203,8 +190,15 @@ public class SceltaSpettacolo extends JFrame {
 				dispose();
 			}
 		});
-
-
-
 	}
+
+	private String dataChange(String data) {
+		String dataReturn ="";
+
+		String[] split = data.split("-");
+		dataReturn = split[2]+"-"+split[1]+"-"+split[0];
+
+		return dataReturn;
+	}
+
 }

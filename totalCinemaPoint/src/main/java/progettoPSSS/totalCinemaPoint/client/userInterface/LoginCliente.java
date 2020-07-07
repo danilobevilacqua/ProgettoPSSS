@@ -11,6 +11,7 @@ import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingle
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -87,14 +88,7 @@ public class LoginCliente extends JFrame {
 		accessButton.setBounds(926, 620, 141, 49);
 		contentPane.add(accessButton);
 		accessButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		final JLabel erroreLabel = new JLabel("Credenziali non valide!");
-		erroreLabel.setForeground(Color.RED);
-		erroreLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		erroreLabel.setBounds(720, 518, 360, 62);
-		contentPane.add(erroreLabel);
-		erroreLabel.setVisible(false);
-		
+				
 		JButton indietroButton = new JButton("Indietro");
 		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		indietroButton.setBounds(50, 620, 141, 49);
@@ -112,14 +106,13 @@ public class LoginCliente extends JFrame {
 		accessButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					erroreLabel.setVisible(false);
 					ControllerClientSingleton.logIn(userField.getText(), passwordField.getText());
 					MenuCliente menu = new MenuCliente();
 					menu.setVisible(true);
 					dispose();
 				} catch (Exception e1) {
 					e1.printStackTrace();
-					erroreLabel.setVisible(true);
+					JOptionPane.showMessageDialog(null, "Credenziali non valide!", "Avviso", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

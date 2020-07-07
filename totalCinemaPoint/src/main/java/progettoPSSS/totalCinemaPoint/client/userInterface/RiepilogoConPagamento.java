@@ -102,29 +102,44 @@ public class RiepilogoConPagamento extends JFrame {
 					e.printStackTrace();
 					confermaButton.setEnabled(false);
 					indietroButton.setEnabled(false);
-					
-					JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
-					tornaSceltaPosto();
+					tornaSceltaPosto(false);
 				} 
 			}
 		});
 
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tornaSceltaPosto();
+				tornaSceltaPosto(true);
 			}
 		});		
 
 	}
 	
-	private void tornaSceltaPosto() {
+	private void tornaSceltaPosto(boolean indietroFlag) {
+		
 		String [] filmInfo = ControllerClientSingleton.getDatiFilm().split("\n");
 		System.out.println(filmInfo[0]);
 		ControllerClientSingleton.getSpettacoliDate(filmInfo[0]);
-		Map<String,String> mappa = ControllerClientSingleton.getPosti(ControllerClientSingleton.getDataSpettacoloSelezionato(), ControllerClientSingleton.getOraSpettacoloSelezionato());
-		PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
-		ps.setVisible(true);
-		dispose();
+		Map<String, String> mappa;
+		try {
+			
+			mappa = ControllerClientSingleton.getPosti(ControllerClientSingleton.getDataSpettacoloSelezionato(), ControllerClientSingleton.getOraSpettacoloSelezionato());
+			if(!indietroFlag) {
+				JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
+			}
+			PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
+			ps.setVisible(true);
+			dispose();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Gli ultimi posti sono stati occupati \n prima della tua prenotazione!", "Avviso", JOptionPane.ERROR_MESSAGE);
+			SceltaSpettacolo sc = new SceltaSpettacolo();
+			sc.setVisible(true);
+			dispose();
+		}
+		
 	}
 
 }

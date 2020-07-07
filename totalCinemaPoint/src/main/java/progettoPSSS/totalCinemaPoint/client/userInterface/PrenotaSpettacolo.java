@@ -68,46 +68,6 @@ public class PrenotaSpettacolo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JButton legendaButton = new JButton("");
-		legendaButton.setBackground(Color.BLUE);
-		legendaButton.setEnabled(false);
-		legendaButton.setBounds(50, 230, 110, 40);
-		contentPane.add(legendaButton);
-
-		JButton legendaButton2 = new JButton("");
-		legendaButton2.setBackground(Color.GREEN);
-		legendaButton2.setEnabled(false);
-		legendaButton2.setBounds(50, 275, 110, 40);
-		contentPane.add(legendaButton2);
-
-		JButton legendaButton3 = new JButton("");
-		legendaButton3.setBackground(Color.YELLOW);
-		legendaButton3.setEnabled(false);
-		legendaButton3.setBounds(50, 320, 110, 40);
-		contentPane.add(legendaButton3);
-
-		JButton legendaButton4 = new JButton("");
-		legendaButton4.setBackground(Color.RED);
-		legendaButton4.setEnabled(false);
-		legendaButton4.setBounds(50, 365, 110, 40);
-		contentPane.add(legendaButton4);
-		
-		JLabel selezionatoLabel = new JLabel("Posto selezionato");
-		selezionatoLabel.setBounds(849, 39, 106, 16);
-		contentPane.add(selezionatoLabel);
-
-		JLabel liberoLabel = new JLabel("Posto libero");
-		liberoLabel.setBounds(849, 71, 106, 16);
-		contentPane.add(liberoLabel);
-
-		JLabel covidLabel = new JLabel("Posto per il distanziamento");
-		covidLabel.setBounds(850, 100, 165, 16);
-		contentPane.add(covidLabel);
-
-		JLabel occupatoLabel = new JLabel("Posto occupato");
-		occupatoLabel.setBounds(849, 135, 121, 16);
-		contentPane.add(occupatoLabel);
 		
 		JButton confermaButton = new JButton("Conferma");
 		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -136,23 +96,16 @@ public class PrenotaSpettacolo extends JFrame {
 		scrollPane.setViewportView(postiTextArea);
 		postiTextArea.setEditable(false);
 		
-		JLabel sfondoLabel = new JLabel("New label");
-		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));		
-		sfondoLabel.setIcon(img);
-		sfondoLabel.setBounds(0, 0, 1117, 686);
-		contentPane.add(sfondoLabel);
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));
 		
-		/*JTextPane textPane = new JTextPane();
-		textPane.setBounds(218, 110, 710, 380);
-		contentPane.add(textPane);*/
-
+		
 		sala = ControllerClientSingleton.getNomeSala();
 
 		//LOGICA
 		for ( int i = 0; i < size; i++) {
 			for ( int j = 0; j < size; j++) {
 				buttons[i][j] = new JButton(sala+" "+(i+1+j*10));
-				buttons[i][j].setBounds(229+i*71, 110+j*38, 69, 36);
+				buttons[i][j].setBounds(220+i*71, 125+j*38, 69, 36);
 				buttons[i][j].setBackground(Color.green);
 				contentPane.add(buttons[i][j]);
 				if(mappa.containsKey(buttons[i][j].getText()) && mappa.get(buttons[i][j].getText()).equals("prenotato")) {
@@ -182,7 +135,13 @@ public class PrenotaSpettacolo extends JFrame {
 				}
 			}
 		}
-
+		
+		JLabel sfondoLabel = new JLabel("");		
+		sfondoLabel.setIcon(img);
+		sfondoLabel.setBounds(0, 0, 1117, 686);
+		
+		contentPane.add(sfondoLabel);
+		
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map <String,String> mappaPosti = new HashMap<String, String>();
