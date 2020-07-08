@@ -18,6 +18,7 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.StyledDocument;
 
 import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
 
@@ -88,16 +89,16 @@ public class PrenotaSpettacolo extends JFrame {
 		indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(970, 230, 100, 280);
+		scrollPane.setBounds(999, 230, 71, 280);
 		contentPane.add(scrollPane);
 
 		postiTextArea = new JTextArea();
-		postiTextArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
+		postiTextArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(postiTextArea);
 		postiTextArea.setEditable(false);
-
+		
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));
 
 
@@ -271,14 +272,14 @@ public class PrenotaSpettacolo extends JFrame {
 	}
 
 	private void setPostiTextArea() {
-		String postiOccupati="";
+		String postiOccupati=" ";
 		List<Integer> sortedList = new ArrayList<Integer>();
 		for(String s : postiPrenotati) {
 			sortedList.add((Integer.parseInt(s.split(" ")[1]))); 
 		}
 		Collections.sort(sortedList);
 		for(int s : sortedList) {
-			postiOccupati = postiOccupati+sala+" "+s+"\n"; 
+			postiOccupati = postiOccupati+sala+" "+s+"\n "; 
 		}
 		postiTextArea.removeAll();
 		postiTextArea.setText(postiOccupati);

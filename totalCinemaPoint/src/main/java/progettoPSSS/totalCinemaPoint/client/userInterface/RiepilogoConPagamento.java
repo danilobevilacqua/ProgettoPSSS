@@ -28,6 +28,8 @@ import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class RiepilogoConPagamento extends JFrame {
 
@@ -65,8 +67,20 @@ public class RiepilogoConPagamento extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		ImageIcon img2 = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoprenotazione.png")); 
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(445, 437, 294, 80);
+		contentPane.add(scrollPane);
+
+		JTextArea postiArea = new JTextArea();
+		postiArea.setLineWrap(true);
+		scrollPane.setViewportView(postiArea);
+		postiArea.setEditable(false);
+		postiArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		final JButton indietroButton = new JButton("Indietro");
 		indietroButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -116,39 +130,31 @@ public class RiepilogoConPagamento extends JFrame {
 		salaLabel.setBounds(450, 413, 238, 22);
 		contentPane.add(salaLabel);
 
-		JTextArea postiArea = new JTextArea();
-		postiArea.setEditable(false);
-		postiArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		postiArea.setBounds(450, 440, 285, 74);
-		postiArea.setOpaque(false);
-		postiArea.setLineWrap(true);
-		contentPane.add(postiArea);
-
 		JLabel importoLabel = new JLabel("New label");
 		importoLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		importoLabel.setBounds(450, 547, 227, 22);
 		contentPane.add(importoLabel);
-		
+
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoConPagamento.jpg"));		
 
 		final Double prezzo = ControllerClientSingleton.calcolaImporto(mappaPosti);
-		
+
 		String[] datiUtenteSplit = ControllerClientSingleton.getDatiCliente().split("\n");
-		
+
 		userLabel.setText(datiUtenteSplit[0]);
 		nomeLabel.setText(datiUtenteSplit[1]);
 		cognomeLabel.setText(datiUtenteSplit[2]);
-		
+
 		titoloLabel.setText(ControllerClientSingleton.getDatiFilm().split("\n")[0]);
 		String data = dataChange(ControllerClientSingleton.getDataSpettacoloSelezionato());
 		dataLabel.setText(data);
 		String ora = oraChange(ControllerClientSingleton.getOraSpettacoloSelezionato());
 		oraLabel.setText(ora);
-		
+
 		String postiNumero="";
 		List<Integer> posti = new ArrayList<Integer>();
 		boolean flagSala = true;
-		
+
 		for(String s : mappaPosti.keySet()) {
 			if(mappaPosti.get(s).equals("prenotato")) {
 				posti.add(Integer.parseInt(s.split(" ")[1]));
@@ -158,21 +164,21 @@ public class RiepilogoConPagamento extends JFrame {
 				}
 			}
 		}
-		
+
 		Collections.sort(posti);
-		
+
 		for(int i : posti) {
 			postiNumero = postiNumero+i+" ";			
 		}
-		
-		System.out.println(postiNumero);
-		postiArea.setText(postiNumero);
-		
+
 		importoLabel.setText(Double.toString(ControllerClientSingleton.calcolaImporto(mappaPosti)));
 		JLabel riepilogoLabel = new JLabel("");
 		riepilogoLabel.setBounds(265, 31, 545, 626);
 		riepilogoLabel.setIcon(img2);
 		contentPane.add(riepilogoLabel);
+		
+		postiArea.setText(postiNumero);
+		
 		JLabel sfondoLabel = new JLabel("");
 		sfondoLabel.setIcon(img);
 		sfondoLabel.setBounds(0, 0, 1117, 686);
@@ -212,7 +218,6 @@ public class RiepilogoConPagamento extends JFrame {
 	private void tornaSceltaPosto(boolean indietroFlag) {
 
 		String [] filmInfo = ControllerClientSingleton.getDatiFilm().split("\n");
-		System.out.println(filmInfo[0]);
 		ControllerClientSingleton.getSpettacoliDate(filmInfo[0]);
 		Map<String, String> mappa;
 		try {
@@ -235,7 +240,7 @@ public class RiepilogoConPagamento extends JFrame {
 		}
 
 	}
-	
+
 	private String dataChange(String data) {
 		String dataReturn ="";
 
@@ -244,7 +249,7 @@ public class RiepilogoConPagamento extends JFrame {
 
 		return dataReturn;
 	}
-	
+
 	private String oraChange(String ora) {
 
 		String oraReturn="";
@@ -252,5 +257,4 @@ public class RiepilogoConPagamento extends JFrame {
 		oraReturn = split[0]+":"+split[1];
 		return oraReturn;
 	}	
-
 }

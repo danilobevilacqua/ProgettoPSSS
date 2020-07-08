@@ -247,7 +247,6 @@ public class SceltaSpettacolo extends JFrame {
 					oraComboBox.addItem("--ORA--");
 					oraComboBox.setEnabled(false);
 					String dataSelezionataCb = ((String)dataComboBox.getSelectedItem());
-					System.out.println();
 					if((dataSelezionataCb!=null)&&(!dataSelezionataCb.equals("--DATA--"))) {
 						dataSelezionata = dataChange(dataSelezionataCb);
 						orari = ControllerClientSingleton.getSpettacoliOrari(dataSelezionata);
