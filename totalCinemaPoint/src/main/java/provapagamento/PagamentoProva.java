@@ -5,9 +5,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioPagamento;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioPagamento;
 
-public class PagamentoProva extends UnicastRemoteObject implements ServizioPagamento {
+public class PagamentoProva extends UnicastRemoteObject implements IServizioPagamento {
 
 	protected PagamentoProva() throws RemoteException {
 		super();

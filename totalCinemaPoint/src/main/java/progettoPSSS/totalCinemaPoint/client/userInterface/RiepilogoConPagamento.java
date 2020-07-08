@@ -150,18 +150,13 @@ public class RiepilogoConPagamento extends JFrame {
 		dataLabel.setText(data);
 		String ora = oraChange(ControllerClientSingleton.getOraSpettacoloSelezionato());
 		oraLabel.setText(ora);
-
+		salaLabel.setText(ControllerClientSingleton.getNomeSala());
 		String postiNumero="";
 		List<Integer> posti = new ArrayList<Integer>();
-		boolean flagSala = true;
 
 		for(String s : mappaPosti.keySet()) {
 			if(mappaPosti.get(s).equals("prenotato")) {
 				posti.add(Integer.parseInt(s.split(" ")[1]));
-				if(flagSala) {
-					salaLabel.setText(s.split(" ")[0]);
-					flagSala = false;
-				}
 			}
 		}
 

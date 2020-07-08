@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -189,12 +190,19 @@ public class SceltaSpettacolo extends JFrame {
 		//LOGICA
 		try {
 			String titoliFilm = ControllerClientSingleton.getFilmTitles();
-
+			List<String> listaFilmOrdinati = new ArrayList<String>();
 			if(!titoliFilm.isEmpty()) {	
-				for (String s : titoliFilm.split("\n")) {
+				
+				for(String s : titoliFilm.split("\n")) {
+					listaFilmOrdinati.add(s);
+				}
+				Collections.sort(listaFilmOrdinati);
+				
+				for (String s : listaFilmOrdinati) {
 					filmComboBox.addItem(s);
 				}				
 			}
+			
 			filmComboBox.addActionListener(new ActionListener () {
 				public void actionPerformed(ActionEvent e) {
 					dataComboBox.removeAllItems();
@@ -203,7 +211,7 @@ public class SceltaSpettacolo extends JFrame {
 					filmSelezionato = ((String)filmComboBox.getSelectedItem());
 					if((filmSelezionato!= null) && (!filmSelezionato.equals("--FILM--"))) {
 
-						Set<String> date = ControllerClientSingleton.getSpettacoliDate((String)filmComboBox.getSelectedItem());
+						List<String> date = ControllerClientSingleton.getSpettacoliDate((String)filmComboBox.getSelectedItem());
 
 						String[] datiFilmSplit = ControllerClientSingleton.getDatiFilm().split("\n");
 						titoloLabel.setText(datiFilmSplit[0]);

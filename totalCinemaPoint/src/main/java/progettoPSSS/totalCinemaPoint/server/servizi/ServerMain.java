@@ -11,7 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioPagamento;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioPagamento;
 import progettoPSSS.totalCinemaPoint.server.businessLogic.ControllerCliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
 import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
@@ -23,7 +23,7 @@ public class ServerMain {
 
 		try {
 			Registry r = LocateRegistry.getRegistry();
-			ServizioPagamento sp = (ServizioPagamento) r.lookup("pagamento");
+			IServizioPagamento sp = (IServizioPagamento) r.lookup("pagamento");
 			ControllerCliente sc = new ControllerCliente(sp);
 			r.rebind("serviziocliente", sc);
 			/*sc.logIn("walterwhite", "walter");

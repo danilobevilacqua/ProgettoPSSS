@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -19,17 +21,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import progettoPSSS.totalCinemaPoint.client.entity.Cliente;
 import progettoPSSS.totalCinemaPoint.client.entity.Film;
 import progettoPSSS.totalCinemaPoint.client.entity.Prenotazione;
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioCliente;
 import progettoPSSS.totalCinemaPoint.client.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.client.entity.Spettacolo;
 
 @SuppressWarnings("all")
 public class ControllerClientSingleton {
-	static private ServizioCliente sc;
+	static private IServizioCliente sc;
 	static private ObjectMapper om = new ObjectMapper();
 	static private Cliente cliente;
 	static private List<Film> listaFilm;
-	static private int indicefilmSelezionato;
+//	static private int indicefilmSelezionato;
 	static private Film filmSelezionato;
 	static private Spettacolo spettacoloScelto;
 
@@ -37,10 +39,10 @@ public class ControllerClientSingleton {
 
 	}
 
-	public static synchronized ServizioCliente getInstance() throws RemoteException, NotBoundException {
+	public static synchronized IServizioCliente getInstance() throws RemoteException, NotBoundException {
 		if(sc == null) {
 			Registry r = LocateRegistry.getRegistry();
-			sc = (ServizioCliente) r.lookup("serviziocliente");
+			sc = (IServizioCliente) r.lookup("serviziocliente");
 		}
 
 		return sc;
@@ -77,7 +79,7 @@ public class ControllerClientSingleton {
 		return titoliFilm;
 	}
 
-	public static Set<String> getSpettacoliDate(String titoloFilm) {
+	public static List<String> getSpettacoliDate(String titoloFilm) {
 
 		/*
 		for(int i = 0; i < listaFilm.size(); i++) {
@@ -106,13 +108,20 @@ public class ControllerClientSingleton {
 			e.printStackTrace();
 		}
 
-		Set<String> setDateSpettacoli = new HashSet<String>();
+		Set<Date> setDateSpettacoli = new HashSet<Date>();
 
 		for(Spettacolo s : filmSelezionato.getListaSpettacoli()) {
-			setDateSpettacoli.add(s.getData().toString());
+			setDateSpettacoli.add(s.getData());
+		}
+		
+		List<Date> listaDate = new ArrayList<Date>(setDateSpettacoli);
+		Collections.sort(listaDate);
+		List<String> listaDateReturn = new ArrayList<String>();
+		for(Date d : listaDate) {
+			listaDateReturn.add(d.toString());
 		}
 
-		return setDateSpettacoli;
+		return listaDateReturn;
 
 	}
 
@@ -151,10 +160,6 @@ public class ControllerClientSingleton {
 		}
 
 		return mappaPosti;
-	}
-
-	public static String getNomeSala() {
-		return spettacoloScelto.getNomeSala();
 	}
 
 	/*
@@ -198,6 +203,10 @@ public class ControllerClientSingleton {
 
 	public static byte[] getLocandinaFilm() {
 		return filmSelezionato.getLocandina();
+	}
+	
+	public static String getNomeSala() {
+		return spettacoloScelto.getNomeSala();
 	}
 
 	public static String getDatiFilm() {

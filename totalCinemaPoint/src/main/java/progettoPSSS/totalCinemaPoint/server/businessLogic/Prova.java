@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioCliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
 import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;

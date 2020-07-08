@@ -15,10 +15,11 @@ public class Cinema {
 		this.listaFilms = getFilms();
 	}
 	
+	/*
 	public Cinema(List<Film> listaFilms) {
 		super();
 		this.listaFilms = listaFilms;
-	}
+	}*/
 
 	public List<Film> getListaFilms() {
 		return listaFilms;

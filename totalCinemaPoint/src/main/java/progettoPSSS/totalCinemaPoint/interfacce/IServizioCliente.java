@@ -3,7 +3,7 @@ package progettoPSSS.totalCinemaPoint.interfacce;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface ServizioCliente extends Remote {
+public interface IServizioCliente extends Remote {
 	String logIn(String username, String password) throws RemoteException;
 	String getFilm() throws RemoteException;
 	String getSpettacoli(String filmSceltoJSON) throws RemoteException;

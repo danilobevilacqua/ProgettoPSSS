@@ -14,8 +14,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioCliente;
-import progettoPSSS.totalCinemaPoint.interfacce.ServizioPagamento;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioCliente;
+import progettoPSSS.totalCinemaPoint.interfacce.IServizioPagamento;
 import progettoPSSS.totalCinemaPoint.server.entity.Cinema;
 import progettoPSSS.totalCinemaPoint.server.entity.Cliente;
 import progettoPSSS.totalCinemaPoint.server.entity.Film;
@@ -24,14 +24,14 @@ import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.server.entity.Prenotazione;
 import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 
-public class ControllerCliente extends UnicastRemoteObject implements ServizioCliente {
+public class ControllerCliente extends UnicastRemoteObject implements IServizioCliente {
 
 //	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
 	private Cinema cinema = new Cinema();
-	private ServizioPagamento servizioPagamento;
+	private IServizioPagamento servizioPagamento;
 	private ObjectMapper om = new ObjectMapper();
 	
-	public ControllerCliente(ServizioPagamento servizioPagamento) throws RemoteException {
+	public ControllerCliente(IServizioPagamento servizioPagamento) throws RemoteException {
 		super();
 		this.servizioPagamento = servizioPagamento;
 	}
