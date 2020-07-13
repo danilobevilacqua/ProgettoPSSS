@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
+import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerCliente;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,6 +37,7 @@ public class RiepilogoConPagamento extends JFrame {
 	private JPanel contentPane;
 	private static String titolo = "TOTAL CINEMA POINT - Riepilogo e Pagamento";
 	private static Map<String,String> mappaPosti;
+	private static Point p = new Point();
 	/**
 	 * Launch the application.
 	 */
@@ -43,10 +45,8 @@ public class RiepilogoConPagamento extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RiepilogoConPagamento frame = new RiepilogoConPagamento(mappaPosti);
+					RiepilogoConPagamento frame = new RiepilogoConPagamento(p, mappaPosti);
 					frame.setVisible(true);
-					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
-					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,7 +57,7 @@ public class RiepilogoConPagamento extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RiepilogoConPagamento(final Map<String,String> mappaPosti) {
+	public RiepilogoConPagamento(final Point p, final Map<String,String> mappaPosti) {
 		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,8 +67,9 @@ public class RiepilogoConPagamento extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		ImageIcon img2 = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoprenotazione.png")); 
+		setLocation(p);
+		ImageIcon imgIco = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+		setIconImage(imgIco.getImage());
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -135,22 +136,20 @@ public class RiepilogoConPagamento extends JFrame {
 		importoLabel.setBounds(450, 547, 227, 22);
 		contentPane.add(importoLabel);
 
-		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoConPagamento.jpg"));		
+		final Double prezzo = ControllerCliente.calcolaImporto(mappaPosti);
 
-		final Double prezzo = ControllerClientSingleton.calcolaImporto(mappaPosti);
-
-		String[] datiUtenteSplit = ControllerClientSingleton.getDatiCliente().split("\n");
+		String[] datiUtenteSplit = ControllerCliente.getDatiCliente().split("\n");
 
 		userLabel.setText(datiUtenteSplit[0]);
 		nomeLabel.setText(datiUtenteSplit[1]);
 		cognomeLabel.setText(datiUtenteSplit[2]);
 
-		titoloLabel.setText(ControllerClientSingleton.getDatiFilm().split("\n")[0]);
-		String data = dataChange(ControllerClientSingleton.getDataSpettacoloSelezionato());
+		titoloLabel.setText(ControllerCliente.getDatiFilm().split("\n")[0]);
+		String data = dataChange(ControllerCliente.getDataSpettacoloSelezionato());
 		dataLabel.setText(data);
-		String ora = oraChange(ControllerClientSingleton.getOraSpettacoloSelezionato());
+		String ora = oraChange(ControllerCliente.getOraSpettacoloSelezionato());
 		oraLabel.setText(ora);
-		salaLabel.setText(ControllerClientSingleton.getNomeSala());
+		salaLabel.setText(ControllerCliente.getNomeSala());
 		String postiNumero="";
 		List<Integer> posti = new ArrayList<Integer>();
 
@@ -166,7 +165,9 @@ public class RiepilogoConPagamento extends JFrame {
 			postiNumero = postiNumero+i+" ";			
 		}
 
-		importoLabel.setText(Double.toString(ControllerClientSingleton.calcolaImporto(mappaPosti)));
+		importoLabel.setText(Double.toString(ControllerCliente.calcolaImporto(mappaPosti)));
+		
+		ImageIcon img2 = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoprenotazione.png")); 
 		JLabel riepilogoLabel = new JLabel("");
 		riepilogoLabel.setBounds(265, 31, 545, 626);
 		riepilogoLabel.setIcon(img2);
@@ -174,6 +175,7 @@ public class RiepilogoConPagamento extends JFrame {
 		
 		postiArea.setText(postiNumero);
 		
+		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/riepilogoConPagamento.jpg"));
 		JLabel sfondoLabel = new JLabel("");
 		sfondoLabel.setIcon(img);
 		sfondoLabel.setBounds(0, 0, 1117, 686);
@@ -182,13 +184,13 @@ public class RiepilogoConPagamento extends JFrame {
 		confermaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					int codice = ControllerClientSingleton.prenota(mappaPosti, prezzo);			
+					int codice = ControllerCliente.prenota(mappaPosti, prezzo);			
 					confermaButton.setEnabled(false);
 					indietroButton.setEnabled(false);
 
 					JOptionPane.showMessageDialog(null, "Prenotazione effettuata con successo! \n Il codice della prenotazione è: "+codice, "Avviso", JOptionPane.INFORMATION_MESSAGE);
 
-					MenuCliente mc = new MenuCliente();
+					MenuCliente mc = new MenuCliente(getLocation());
 					mc.setVisible(true);
 					dispose();
 
@@ -212,16 +214,16 @@ public class RiepilogoConPagamento extends JFrame {
 
 	private void tornaSceltaPosto(boolean indietroFlag) {
 
-		String [] filmInfo = ControllerClientSingleton.getDatiFilm().split("\n");
-		ControllerClientSingleton.getSpettacoliDate(filmInfo[0]);
+		String [] filmInfo = ControllerCliente.getDatiFilm().split("\n");
+		ControllerCliente.getSpettacoliDate(filmInfo[0]);
 		Map<String, String> mappa;
 		try {
 
-			mappa = ControllerClientSingleton.getPosti(ControllerClientSingleton.getDataSpettacoloSelezionato(), ControllerClientSingleton.getOraSpettacoloSelezionato());
+			mappa = ControllerCliente.getPosti(ControllerCliente.getDataSpettacoloSelezionato(), ControllerCliente.getOraSpettacoloSelezionato());
 			if(!indietroFlag) {
 				JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
 			}
-			PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
+			PrenotaSpettacolo ps = new PrenotaSpettacolo(getLocation(),mappa);
 			ps.setVisible(true);
 			dispose();
 
@@ -229,7 +231,7 @@ public class RiepilogoConPagamento extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Gli ultimi posti sono stati occupati \n prima della tua prenotazione!", "Avviso", JOptionPane.ERROR_MESSAGE);
-			SceltaSpettacolo sc = new SceltaSpettacolo();
+			SceltaSpettacolo sc = new SceltaSpettacolo(getLocation());
 			sc.setVisible(true);
 			dispose();
 		}

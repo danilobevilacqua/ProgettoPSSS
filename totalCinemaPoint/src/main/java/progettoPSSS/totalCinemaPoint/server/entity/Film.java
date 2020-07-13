@@ -37,7 +37,7 @@ public class Film implements Serializable {
 		this.locandina = f.getLocandina();
 		this.listaSpettacoli = new ArrayList<Spettacolo>();
 	}
-		
+	/*	
 	public Film(int idFilm, String titolo, String descrizione, int anno, String regista, byte[] locandina, List<Spettacolo> listaSpettacoli) {
 		super();
 		this.idFilm = idFilm;
@@ -47,7 +47,7 @@ public class Film implements Serializable {
 		this.regista = regista;
 		this.locandina = locandina;
 		this.listaSpettacoli = listaSpettacoli;
-	}
+	}*/
 	
 	public int getIdFilm() {
 		return idFilm;

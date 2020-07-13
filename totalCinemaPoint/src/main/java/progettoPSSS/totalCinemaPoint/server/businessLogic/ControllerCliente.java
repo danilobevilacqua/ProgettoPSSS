@@ -1,6 +1,9 @@
 package progettoPSSS.totalCinemaPoint.server.businessLogic;
 
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -28,12 +31,13 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 
 //	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
 	private Cinema cinema = new Cinema();
-	private IServizioPagamento servizioPagamento;
+//	private IServizioPagamento servizioPagamento;
+	private Registry registry ;
 	private ObjectMapper om = new ObjectMapper();
 	
-	public ControllerCliente(IServizioPagamento servizioPagamento) throws RemoteException {
+	public ControllerCliente(Registry r) throws RemoteException {
 		super();
-		this.servizioPagamento = servizioPagamento;
+		this.registry = r;
 	}
 	
 	/*
@@ -82,8 +86,8 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 			
 			clienteJSON = om.writeValueAsString(cliente);
 		} catch (Exception e) {
-			//System.out.println("Log in fallito!");
-			throw new RemoteException("Log-in fallito! ");
+//			System.out.println("Log in fallito!");
+			throw new RemoteException("Log-in fallito!");
 		}
 		
 		return clienteJSON;
@@ -167,6 +171,13 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 		
 		List<PostoPrenotato> listaPostiValidati = postiValidati(spettacolo, postiScelti);
 		
+		IServizioPagamento servizioPagamento = null;
+		try {
+			servizioPagamento = (IServizioPagamento) registry.lookup("pagamento");
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			throw new RemoteException("servizio di pagamento non attivo");
+		}
 		if (!servizioPagamento.paga(importo, numeroConto))
 			throw new RemoteException("Errore, pagamento non avvenuto");
 		

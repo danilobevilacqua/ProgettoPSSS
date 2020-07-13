@@ -8,14 +8,14 @@ import progettoPSSS.totalCinemaPoint.server.DAO.PrenotazioneDAO;
 import progettoPSSS.totalCinemaPoint.server.DAO.SpettacoloDAO;
 
 public class Prenotazione {
-	
+
 	private int codice;
 	private String usernameCliente;
 	private int idSpettacolo;
 	private List<PostoPrenotato> listaPostiPrenotati;
-	
-	
-	
+
+
+
 	public Prenotazione() {
 		super();
 		this.codice = 0;
@@ -23,21 +23,24 @@ public class Prenotazione {
 		this.idSpettacolo = 0;
 		this.listaPostiPrenotati = new ArrayList<PostoPrenotato>();
 	}
-	
+
 	public Prenotazione(PrenotazioneDAO p) {
 		super();
 		this.codice = p.getCodice();
 		this.usernameCliente = p.getUsernameCliente_fk();
 		this.idSpettacolo = p.getIdSpettacolo_fk();		
 		this.listaPostiPrenotati = getPostiPrenotati(p.getCodice());
-			
+
 	}
-		
+
 	public Prenotazione(String usernameCliente, int idSpettacolo,List<PostoPrenotato> listaPostiPrenotati) {
 		PrenotazioneDAO pd = new PrenotazioneDAO(usernameCliente,idSpettacolo);
 		int codicePrenotazione= pd.savePrenotazione();
 		this.codice=codicePrenotazione;
-		PostoPrenotato.setPostiPrenotati(listaPostiPrenotati, codicePrenotazione);
+		for(PostoPrenotato p : listaPostiPrenotati) {
+			p.setCodicePrenotazione(codice);
+			p.setPostoPrenotato();
+		}
 	}
 
 	public int getCodice() {
@@ -64,7 +67,7 @@ public class Prenotazione {
 	public void setlistaPostiPrenotati(List<PostoPrenotato> listaPostiPrenotati) {
 		this.listaPostiPrenotati = listaPostiPrenotati;
 	}
-	
+
 
 	public List<PostoPrenotato> getPostiPrenotati(int codicePrenotazione){
 		PrenotazioneDAO p = new PrenotazioneDAO();
@@ -74,5 +77,6 @@ public class Prenotazione {
 			listaPostiPrenotati.add(new PostoPrenotato(p.getListaPostiPrenotati().get(i)));
 		}
 		return listaPostiPrenotati;
-	}
+	}		
+
 }

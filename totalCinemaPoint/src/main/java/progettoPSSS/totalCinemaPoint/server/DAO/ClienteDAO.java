@@ -81,6 +81,7 @@ public class ClienteDAO {
 		this.telefono = d.getTelefono();
 	}
 
+	/*
 	public ClienteDAO(String username, String nome, String cognome, String password, String numeroCartaCredito,
 			String eMail, String telefono) {
 		super();
@@ -91,7 +92,7 @@ public class ClienteDAO {
 		this.numeroCartaCredito = numeroCartaCredito;
 		this.eMail = eMail;
 		this.telefono = telefono;
-	}
+	}*/
 
 	public String getNome() {
 		return nome;
@@ -149,7 +150,7 @@ public class ClienteDAO {
 		this.telefono = telefono;
 	}
 	
-	
+	/*
 	  public int saveCliente() {		  
 		  
 		  Session session = HibernateConnectionManager.getSessionFactory().openSession();
@@ -159,7 +160,7 @@ public class ClienteDAO {
 		  session.getTransaction().commit();
 		  session.close();
 		  return id;
-	  }	
+	  }	*/
 	  
 
 }

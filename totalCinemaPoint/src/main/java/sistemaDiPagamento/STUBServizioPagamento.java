@@ -1,4 +1,4 @@
-package provapagamento;
+package sistemaDiPagamento;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,9 +7,9 @@ import java.rmi.server.UnicastRemoteObject;
 
 import progettoPSSS.totalCinemaPoint.interfacce.IServizioPagamento;
 
-public class PagamentoProva extends UnicastRemoteObject implements IServizioPagamento {
+public class STUBServizioPagamento extends UnicastRemoteObject implements IServizioPagamento {
 
-	protected PagamentoProva() throws RemoteException {
+	protected STUBServizioPagamento() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -18,7 +18,7 @@ public class PagamentoProva extends UnicastRemoteObject implements IServizioPaga
 		// TODO Auto-generated method stub
 		try {
 			Registry r = LocateRegistry.getRegistry();
-			r.rebind("pagamento", new PagamentoProva());
+			r.rebind("pagamento", new STUBServizioPagamento());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

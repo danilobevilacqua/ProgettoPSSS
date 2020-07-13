@@ -60,7 +60,7 @@ public class SpettacoloDAO {
 		this.idFilm_fk = s.getIdFilm_fk();
 		this.nomeSala_fk = s.getNomeSala_fk();
 	}
-	
+	/*
 	public SpettacoloDAO(int idSpettacolo, Date data, String ora, Double prezzo, int idFilm_fk, String nomeSala_fk) {
 		super();
 		this.idSpettacolo = idSpettacolo;
@@ -69,7 +69,7 @@ public class SpettacoloDAO {
 		this.prezzo = prezzo;
 		this.idFilm_fk = idFilm_fk;
 		this.nomeSala_fk = nomeSala_fk;
-	}
+	}*/
 	
 	public int getIdSpettacolo() {
 		return idSpettacolo;

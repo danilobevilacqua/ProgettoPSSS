@@ -36,6 +36,8 @@ public class FilmDAO {
 	private byte [] locandina;
 	@Transient
 	private List<SpettacoloDAO> listaSpettacoli;
+	@Column(name = "CInema_idCinema", nullable = false)
+	private String idcinema_fk;
 	
 	public FilmDAO() {
 		super();
@@ -60,7 +62,7 @@ public class FilmDAO {
 		this.regista = f.getRegista();
 		this.locandina = f.getLocandina();
 	}
-	
+	/*
 	public FilmDAO(int idFilm, String titolo, String descrizione, int anno, String regista, byte[] locandina) {
 		super();
 		this.idFilm = idFilm;
@@ -69,7 +71,7 @@ public class FilmDAO {
 		this.anno = anno;
 		this.regista = regista;
 		this.locandina = locandina;
-	}
+	}*/
 
 	public int getIdFilm() {
 		return idFilm;
@@ -125,6 +127,14 @@ public class FilmDAO {
 
 	public void setListaSpettacoli(List<SpettacoloDAO> listaSpettacoli) {
 		this.listaSpettacoli = listaSpettacoli;
+	}
+
+	public String getIdcinema_fk() {
+		return idcinema_fk;
+	}
+
+	public void setIdcinema_fk(String idcinema_fk) {
+		this.idcinema_fk = idcinema_fk;
 	}
 
 	public List<SpettacoloDAO> getAllSpettacoli(int codiceFilm) {

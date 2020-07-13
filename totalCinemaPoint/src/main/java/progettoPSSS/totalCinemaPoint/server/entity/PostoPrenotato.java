@@ -6,13 +6,13 @@ import java.util.List;
 import progettoPSSS.totalCinemaPoint.server.DAO.PostoPrenotatoDAO;
 
 public class PostoPrenotato {
-	
+
 	private int codicePrenotazione;
 	private int numeroPosto;
 	private String nomeSala;
 	private String tipo;
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -48,15 +48,15 @@ public class PostoPrenotato {
 		this.nomeSala = "";
 		this.tipo = "";
 	}
-	
+
 	public PostoPrenotato(PostoPrenotatoDAO pp) {
 		this.codicePrenotazione = pp.getCodicePrenotazione_fk();
 		this.numeroPosto = pp.getNumeroPosto_fk();
 		this.nomeSala = pp.getNomeSala_fk();
 		this.tipo = pp.getTipo();
 	}
-	
-		
+
+
 	public int getCodicePrenotazione() {
 		return codicePrenotazione;
 	}
@@ -83,13 +83,8 @@ public class PostoPrenotato {
 		this.tipo = tipo;
 	}
 
-	public static void setPostiPrenotati(List<PostoPrenotato> listaPostiPrenotati, int codice) {
-		
-		for(PostoPrenotato p : listaPostiPrenotati) {
-			p.setCodicePrenotazione(codice);
-			PostoPrenotatoDAO ppd = new PostoPrenotatoDAO(p.getCodicePrenotazione(),p.getNumeroPosto(),p.getNomeSala(),p.getTipo());
-		}
-		
+	public void setPostoPrenotato() {
+		PostoPrenotatoDAO ppd = new PostoPrenotatoDAO(this.getCodicePrenotazione(),this.getNumeroPosto(),this.getNomeSala(),this.getTipo());
 	}
-	
+
 }

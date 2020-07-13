@@ -23,8 +23,8 @@ public class ServerMain {
 
 		try {
 			Registry r = LocateRegistry.getRegistry();
-			IServizioPagamento sp = (IServizioPagamento) r.lookup("pagamento");
-			ControllerCliente sc = new ControllerCliente(sp);
+			//IServizioPagamento sp = (IServizioPagamento) r.lookup("pagamento");
+			ControllerCliente sc = new ControllerCliente(r);
 			r.rebind("serviziocliente", sc);
 			/*sc.logIn("walterwhite", "walter");
 			System.out.println("Log-in effettuato correttamente!");
@@ -139,10 +139,7 @@ public class ServerMain {
 		} catch (RemoteException e) {
 	
 			e.printStackTrace();
-		} catch (NotBoundException e) {
-	
-			e.printStackTrace();
-		}
+		} 
 	}
 
 }

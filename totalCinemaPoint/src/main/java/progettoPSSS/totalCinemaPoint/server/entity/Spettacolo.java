@@ -39,7 +39,8 @@ public class Spettacolo {
 		this.nomeSala = s.getNomeSala_fk();
 		this.listaPrenotazioni = new ArrayList<Prenotazione>();
 	}
-		
+	
+	/*	
 	public Spettacolo(int idSpettacolo, Date data, String ora, Double prezzo, int idFilm, String nomeSala,List<Prenotazione> listaPrenotazioni) {
 		super();
 		this.idSpettacolo = idSpettacolo;
@@ -49,7 +50,7 @@ public class Spettacolo {
 		this.idFilm = idFilm;
 		this.nomeSala = nomeSala;
 		this.listaPrenotazioni = listaPrenotazioni;
-	}
+	}*/
 	
 	public int getIdSpettacolo() {
 		return idSpettacolo;

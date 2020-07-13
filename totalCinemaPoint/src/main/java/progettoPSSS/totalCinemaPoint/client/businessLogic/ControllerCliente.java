@@ -26,31 +26,31 @@ import progettoPSSS.totalCinemaPoint.client.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.client.entity.Spettacolo;
 
 @SuppressWarnings("all")
-public class ControllerClientSingleton {
+public class ControllerCliente {
 	static private IServizioCliente sc;
 	static private ObjectMapper om = new ObjectMapper();
 	static private Cliente cliente;
 	static private List<Film> listaFilm;
-//	static private int indicefilmSelezionato;
+	//	static private int indicefilmSelezionato;
 	static private Film filmSelezionato;
 	static private Spettacolo spettacoloScelto;
 
-	private ControllerClientSingleton() {
+	private ControllerCliente() {
 
 	}
 
 	public static synchronized IServizioCliente getInstance() throws RemoteException, NotBoundException {
-		if(sc == null) {
+		//if(sc == null) {
 			Registry r = LocateRegistry.getRegistry();
 			sc = (IServizioCliente) r.lookup("serviziocliente");
-		}
+	//	}
 
 		return sc;
 	}
 
 	public static boolean logIn(String username, String password) throws RemoteException, NotBoundException {
 		String clienteJSON = getInstance().logIn(username, password);
-
+		
 		try {
 			cliente = om.readValue(clienteJSON, Cliente.class);
 		} catch (JsonMappingException e) {
@@ -79,7 +79,7 @@ public class ControllerClientSingleton {
 		return titoliFilm;
 	}
 
-	public static List<String> getSpettacoliDate(String titoloFilm) {
+	public static List<String> getSpettacoliDate(String titoloFilm)  {
 
 		/*
 		for(int i = 0; i < listaFilm.size(); i++) {
@@ -89,6 +89,7 @@ public class ControllerClientSingleton {
 			}
 		}
 		 */	
+		List<String> listaDateReturn = new ArrayList<String>();
 
 		for (Film f : listaFilm) {
 			if(f.getTitolo().equals(titoloFilm))
@@ -113,13 +114,12 @@ public class ControllerClientSingleton {
 		for(Spettacolo s : filmSelezionato.getListaSpettacoli()) {
 			setDateSpettacoli.add(s.getData());
 		}
-		
+
 		List<Date> listaDate = new ArrayList<Date>(setDateSpettacoli);
 		Collections.sort(listaDate);
-		List<String> listaDateReturn = new ArrayList<String>();
 		for(Date d : listaDate) {
 			listaDateReturn.add(d.toString());
-		}
+		}		
 
 		return listaDateReturn;
 
@@ -204,7 +204,7 @@ public class ControllerClientSingleton {
 	public static byte[] getLocandinaFilm() {
 		return filmSelezionato.getLocandina();
 	}
-	
+
 	public static String getNomeSala() {
 		return spettacoloScelto.getNomeSala();
 	}
@@ -212,13 +212,17 @@ public class ControllerClientSingleton {
 	public static String getDatiFilm() {
 		return filmSelezionato.getTitolo() + "\n" + filmSelezionato.getAnno() + "\n" + filmSelezionato.getRegista() + "\n" +  filmSelezionato.getDescrizione() + "\n";
 	}
-	
+
 	public static String getDatiCliente() {
 		return cliente.getUsername() + "\n" + cliente.getNome() + "\n" + cliente.getCognome();
 	}
-	
+
 	public static double getPrezzoSpettacolo() {
-		return filmSelezionato.getListaSpettacoli().get(0).getPrezzo();
+		double prezzo = 0;
+		if(filmSelezionato.getListaSpettacoli().size() != 0) {
+			prezzo = filmSelezionato.getListaSpettacoli().get(0).getPrezzo();
+		}
+		return prezzo;
 	}
 
 	public static String getDataSpettacoloSelezionato() {

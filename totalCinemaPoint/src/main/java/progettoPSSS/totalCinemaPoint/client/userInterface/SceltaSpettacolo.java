@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
+import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerCliente;
 
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -24,8 +24,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -42,15 +44,14 @@ public class SceltaSpettacolo extends JFrame {
 	private String dataSelezionata;
 	private String filmSelezionato;
 	private List<String> orari;
+	private static Point p = new Point();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SceltaSpettacolo frame = new SceltaSpettacolo();
+					SceltaSpettacolo frame = new SceltaSpettacolo(p);
 					frame.setVisible(true);
-					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
-					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,7 +59,7 @@ public class SceltaSpettacolo extends JFrame {
 		});
 	}
 
-	public SceltaSpettacolo() {
+	public SceltaSpettacolo(final Point p) {
 		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +69,17 @@ public class SceltaSpettacolo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocation(p);
+
+		ImageIcon imgIco = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+		setIconImage(imgIco.getImage());
+		
+		final JLabel erroreLabel = new JLabel("Per il film selezionato non sono presenti spettacoli!");
+		erroreLabel.setForeground(Color.RED);
+		erroreLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		erroreLabel.setBounds(197, 60, 655, 102);
+		contentPane.add(erroreLabel);
+		erroreLabel.setVisible(false);
 
 		final JComboBox <String> filmComboBox  = new JComboBox<String>();
 		filmComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -189,99 +201,118 @@ public class SceltaSpettacolo extends JFrame {
 
 		//LOGICA
 		try {
-			String titoliFilm = ControllerClientSingleton.getFilmTitles();
+			String titoliFilm = ControllerCliente.getFilmTitles();
 			List<String> listaFilmOrdinati = new ArrayList<String>();
 			if(!titoliFilm.isEmpty()) {	
-				
+
 				for(String s : titoliFilm.split("\n")) {
 					listaFilmOrdinati.add(s);
 				}
 				Collections.sort(listaFilmOrdinati);
-				
+
 				for (String s : listaFilmOrdinati) {
 					filmComboBox.addItem(s);
 				}				
-			}
-			
-			filmComboBox.addActionListener(new ActionListener () {
-				public void actionPerformed(ActionEvent e) {
-					dataComboBox.removeAllItems();
-					dataComboBox.addItem("--DATA--");
-					dataComboBox.setEnabled(false);
-					filmSelezionato = ((String)filmComboBox.getSelectedItem());
-					if((filmSelezionato!= null) && (!filmSelezionato.equals("--FILM--"))) {
 
-						List<String> date = ControllerClientSingleton.getSpettacoliDate((String)filmComboBox.getSelectedItem());
 
-						String[] datiFilmSplit = ControllerClientSingleton.getDatiFilm().split("\n");
-						titoloLabel.setText(datiFilmSplit[0]);
-						annoLabel.setText(datiFilmSplit[1]);
-						registaLabel.setText(datiFilmSplit[2]);
-						textArea.setText(datiFilmSplit[3]);
-						prezzoLabel.setText(Double.toString(ControllerClientSingleton.getPrezzoSpettacolo())+" €");
-						locandinaLabel.setIcon(getLocandinaImage(ControllerClientSingleton.getLocandinaFilm(), locandinaLabel.getHeight(), locandinaLabel.getWidth()));
-						titolo2Label.setVisible(true);						
-						anno2Label.setVisible(true);
-						regista2Label.setVisible(true);
-						descrizione2Label.setVisible(true);
-						prezzo2Label.setVisible(true);
+				filmComboBox.addActionListener(new ActionListener () {
+					public void actionPerformed(ActionEvent e) {
+						dataComboBox.removeAllItems();
+						dataComboBox.addItem("--DATA--");
+						dataComboBox.setEnabled(false);
+						erroreLabel.setVisible(false);
+						filmSelezionato = ((String)filmComboBox.getSelectedItem());
+						if((filmSelezionato!= null) && (!filmSelezionato.equals("--FILM--"))) {
 
-						if(!date.isEmpty()) {
-							for (String s : date) {								
-								String data = dataChange(s);
-								dataComboBox.addItem(data);
+							List<String> date;
+							
+							date = ControllerCliente.getSpettacoliDate((String)filmComboBox.getSelectedItem());
+
+							
+							String[] datiFilmSplit = ControllerCliente.getDatiFilm().split("\n");
+							titoloLabel.setText(datiFilmSplit[0]);
+							annoLabel.setText(datiFilmSplit[1]);
+							registaLabel.setText(datiFilmSplit[2]);
+							textArea.setText(datiFilmSplit[3]);
+							prezzoLabel.setText(Double.toString(ControllerCliente.getPrezzoSpettacolo())+" €");
+							locandinaLabel.setIcon(getLocandinaImage(ControllerCliente.getLocandinaFilm(), locandinaLabel.getHeight(), locandinaLabel.getWidth()));
+							titolo2Label.setVisible(true);						
+							anno2Label.setVisible(true);
+							regista2Label.setVisible(true);
+							descrizione2Label.setVisible(true);
+							prezzo2Label.setVisible(true);
+
+							if(!date.isEmpty()) {
+								for (String s : date) {								
+									String data = dataChange(s);
+									dataComboBox.addItem(data);
+								}
+								dataComboBox.setEnabled(true);
+							}else {
+								erroreLabel.setVisible(true);
 							}
-							dataComboBox.setEnabled(true);
+							
+						}else {
+							titoloLabel.setText("");
+							annoLabel.setText("");
+							registaLabel.setText("");
+							textArea.setText("");
+							prezzoLabel.setText("");
+							locandinaLabel.setVisible(false);
+							titolo2Label.setVisible(false);
+							anno2Label.setVisible(false);
+							regista2Label.setVisible(false);
+							descrizione2Label.setVisible(false);
+							prezzo2Label.setVisible(false);
 						}
-					}else {
-						titoloLabel.setText("");
-						annoLabel.setText("");
-						registaLabel.setText("");
-						textArea.setText("");
-						prezzoLabel.setText("");
-						locandinaLabel.setVisible(false);
-						titolo2Label.setVisible(false);
-						anno2Label.setVisible(false);
-						regista2Label.setVisible(false);
-						descrizione2Label.setVisible(false);
-						prezzo2Label.setVisible(false);
 					}
-				}
-			});
+				});
 
-			dataComboBox.addActionListener(new ActionListener () {
-				public void actionPerformed(ActionEvent e) {
-					oraComboBox.removeAllItems();
-					oraComboBox.addItem("--ORA--");
-					oraComboBox.setEnabled(false);
-					String dataSelezionataCb = ((String)dataComboBox.getSelectedItem());
-					if((dataSelezionataCb!=null)&&(!dataSelezionataCb.equals("--DATA--"))) {
-						dataSelezionata = dataChange(dataSelezionataCb);
-						orari = ControllerClientSingleton.getSpettacoliOrari(dataSelezionata);
-						if(!orari.isEmpty()) {
-							for (String s : orari) {
-								String oraFormatted = oraChange(s);
-								oraComboBox.addItem(oraFormatted);
-							}		
-							oraComboBox.setEnabled(true);
+				dataComboBox.addActionListener(new ActionListener () {
+					public void actionPerformed(ActionEvent e) {
+						oraComboBox.removeAllItems();
+						oraComboBox.addItem("--ORA--");
+						oraComboBox.setEnabled(false);
+						String dataSelezionataCb = ((String)dataComboBox.getSelectedItem());
+						if((dataSelezionataCb!=null)&&(!dataSelezionataCb.equals("--DATA--"))) {
+							dataSelezionata = dataChange(dataSelezionataCb);
+							orari = ControllerCliente.getSpettacoliOrari(dataSelezionata);
+							if(!orari.isEmpty()) {
+								for (String s : orari) {
+									String oraFormatted = oraChange(s);
+									oraComboBox.addItem(oraFormatted);
+								}		
+								oraComboBox.setEnabled(true); 
+							}						
+						}
+					}
+				});
+
+				oraComboBox.addActionListener(new ActionListener () {
+					public void actionPerformed(ActionEvent e) {
+						confermaButton.setEnabled(false);
+						String oraSelezionataCb = (String) oraComboBox.getSelectedItem();
+						if((oraSelezionataCb != null) && (!oraSelezionataCb.equals("--ORA--"))) {
+							oraSelezionata = orari.get(oraComboBox.getSelectedIndex()-1);
+							confermaButton.setEnabled(true);
 						}						
 					}
-				}
-			});
+				});
 
-			oraComboBox.addActionListener(new ActionListener () {
-				public void actionPerformed(ActionEvent e) {
-					confermaButton.setEnabled(false);
-					String oraSelezionataCb = (String) oraComboBox.getSelectedItem();
-					if((oraSelezionataCb != null) && (!oraSelezionataCb.equals("--ORA--"))) {
-						oraSelezionata = orari.get(oraComboBox.getSelectedIndex()-1);
-						confermaButton.setEnabled(true);
-					}						
-				}
-			});
+				setVisible(true);
+			}else {
+				MenuCliente mc = new MenuCliente(p);
+				JOptionPane.showMessageDialog(null, "Al momento non sono disponibili Film!", "Avviso", JOptionPane.ERROR_MESSAGE);
+				mc.setVisible(true);
+				dispose();
+			} 
+
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Si sono verificati problemi di linea! \n Controlla la tua connessione", "Avviso", JOptionPane.ERROR_MESSAGE);
+			MenuCliente mc = new MenuCliente(p);
+			JOptionPane.showMessageDialog(null, "Si sono verificati problemi di linea! \n Controlla la tua connessione", "Avviso", JOptionPane.ERROR_MESSAGE);			
+			mc.setVisible(true);
+			dispose();
 			e.printStackTrace();
 		}
 
@@ -289,8 +320,8 @@ public class SceltaSpettacolo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Map<String, String> mappa;
 				try {
-					mappa = ControllerClientSingleton.getPosti(dataSelezionata, oraSelezionata);
-					PrenotaSpettacolo ps = new PrenotaSpettacolo(mappa);
+					mappa = ControllerCliente.getPosti(dataSelezionata, oraSelezionata);
+					PrenotaSpettacolo ps = new PrenotaSpettacolo(getLocation(), mappa);
 					ps.setVisible(true);
 					dispose();
 				} catch (Exception e1) {
@@ -303,7 +334,7 @@ public class SceltaSpettacolo extends JFrame {
 
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MenuCliente m = new MenuCliente();
+				MenuCliente m = new MenuCliente(getLocation());
 				m.setVisible(true);
 				dispose();
 			}
@@ -334,7 +365,6 @@ public class SceltaSpettacolo extends JFrame {
 		try {
 			bImage2 = ImageIO.read(bis);
 			Image image = new ImageIcon(bImage2).getImage();	
-			//Image newImage = image.getScaledInstance(height, width, Image.SCALE_SMOOTH);
 			image2 = new ImageIcon(image);
 
 		} catch (IOException e1) {

@@ -14,21 +14,21 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Point;
 
 @SuppressWarnings("all")
 public class MenuCliente extends JFrame {
 
 	private JPanel contentPane;
 	private static String titolo = "TOTAL CINEMA POINT - Menù";
+	private static Point p = new Point();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuCliente frame = new MenuCliente();
+					MenuCliente frame = new MenuCliente(p);
 					frame.setVisible(true);
-					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
-					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,7 +36,7 @@ public class MenuCliente extends JFrame {
 		});
 	}
 
-	public MenuCliente() {
+	public MenuCliente(final Point p) {
 		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +46,10 @@ public class MenuCliente extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocation(p);
+		
+		ImageIcon imgIco = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+		setIconImage(imgIco.getImage());
 
 		JButton sceltaButton = new JButton("Scegli Spettacolo");
 		sceltaButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -77,17 +81,17 @@ public class MenuCliente extends JFrame {
 		sfondoLabel.setBounds(0, 0, 1117, 686);
 		contentPane.add(sfondoLabel);
 
-		sceltaButton.addActionListener(new ActionListener() {
+		sceltaButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				SceltaSpettacolo s = new SceltaSpettacolo();
-				s.setVisible(true);
+				SceltaSpettacolo s = new SceltaSpettacolo(getLocation());
+				//s.setVisible(true);
 				dispose();
 			}
 		});
 		
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoginCliente l = new LoginCliente();
+				LoginCliente l = new LoginCliente(getLocation());
 				l.setVisible(true);
 				dispose();
 			}

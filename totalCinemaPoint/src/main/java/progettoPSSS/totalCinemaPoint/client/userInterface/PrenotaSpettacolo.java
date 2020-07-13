@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.StyledDocument;
 
-import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerClientSingleton;
+import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerCliente;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,16 +45,15 @@ public class PrenotaSpettacolo extends JFrame {
 	private static Set<String>postiCovid= new HashSet<String>();	
 	private String sala;
 	private JTextArea postiTextArea;
+	private static Point p = new Point();
 
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PrenotaSpettacolo frame = new PrenotaSpettacolo(mappa);
+					PrenotaSpettacolo frame = new PrenotaSpettacolo(p,mappa);
 					frame.setVisible(true);
-					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
-					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,7 +64,7 @@ public class PrenotaSpettacolo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PrenotaSpettacolo(Map<String, String> mappa) {
+	public PrenotaSpettacolo(final Point p, Map<String, String> mappa) {
 		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,6 +74,10 @@ public class PrenotaSpettacolo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocation(p);
+		
+		ImageIcon imgIco = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+		setIconImage(imgIco.getImage());
 
 		final JButton confermaButton = new JButton("Conferma");
 		confermaButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -102,7 +106,7 @@ public class PrenotaSpettacolo extends JFrame {
 		ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/prenotaspettacolo.jpg"));
 
 
-		sala = ControllerClientSingleton.getNomeSala();
+		sala = ControllerCliente.getNomeSala();
 
 		//LOGICA
 		for ( int i = 0; i < size; i++) {
@@ -159,7 +163,7 @@ public class PrenotaSpettacolo extends JFrame {
 
 				postiPrenotati.clear();
 				postiCovid.clear();				
-				RiepilogoConPagamento rcp = new RiepilogoConPagamento(mappaPosti);
+				RiepilogoConPagamento rcp = new RiepilogoConPagamento(getLocation(), mappaPosti);
 				rcp.setVisible(true);
 				dispose();
 			}
@@ -169,7 +173,7 @@ public class PrenotaSpettacolo extends JFrame {
 
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SceltaSpettacolo s = new SceltaSpettacolo();
+				SceltaSpettacolo s = new SceltaSpettacolo(getLocation());
 				s.setVisible(true);
 				dispose();
 			}

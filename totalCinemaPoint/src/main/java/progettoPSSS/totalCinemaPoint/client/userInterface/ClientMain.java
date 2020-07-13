@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Point;
+
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -23,15 +25,14 @@ public class ClientMain extends JFrame {
 	private JPanel contentPane;
 	private BufferedImage img;
 	private static String titolo = "TOTAL CINEMA POINT";
+	private static Point p = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClientMain frame = new ClientMain();
+					ClientMain frame = new ClientMain(p);
 					frame.setVisible(true);
-					ImageIcon img = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
-					frame.setIconImage(img.getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,7 +40,7 @@ public class ClientMain extends JFrame {
 		});
 	}
 
-	public ClientMain() {
+	public ClientMain(Point p) {
 		super(titolo);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +49,14 @@ public class ClientMain extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		ImageIcon imgIcon = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
+		setIconImage(imgIcon.getImage());
 		
+		if(p != null) {
+			setLocation(p);
+		}else {
+			setLocationRelativeTo(null);
+		}		
 		
 		JButton clienteButton = new JButton("Clienti");
 		clienteButton.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -72,7 +80,7 @@ public class ClientMain extends JFrame {
 		
 		clienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoginCliente l = new LoginCliente();
+				LoginCliente l = new LoginCliente(getLocation());
 				l.setVisible(true);
 				dispose();
 			}
