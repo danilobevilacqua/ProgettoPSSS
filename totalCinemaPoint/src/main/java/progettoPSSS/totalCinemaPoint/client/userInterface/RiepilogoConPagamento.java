@@ -58,7 +58,11 @@ public class RiepilogoConPagamento extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		setLocation(p);
+		if(p != null) {
+			setLocation(p);
+		}else {
+			setLocationRelativeTo(null);
+		}	
 		ImageIcon imgIco = new ImageIcon(getClass().getResource("/progettoPSSS/totalCinemaPoint/client/images/LOGO.png"));	
 		setIconImage(imgIco.getImage());
 
