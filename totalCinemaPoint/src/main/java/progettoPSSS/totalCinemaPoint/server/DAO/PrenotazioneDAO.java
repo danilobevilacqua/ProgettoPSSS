@@ -27,6 +27,7 @@ public class PrenotazioneDAO {
 	private int idSpettacolo_fk;
 	@Transient
 	private List<PostoPrenotatoDAO> listaPostiPrenotati;
+	
 	public PrenotazioneDAO() {
 		super();
 		this.codice = 0;

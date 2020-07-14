@@ -12,7 +12,10 @@ public class Cliente {
 	private String eMail;
 	private String telefono;
 	
-	
+		public Cliente() {
+		super();
+	}
+
 	public Cliente(String username, String password) {
 		
 		ClienteDAO d = new ClienteDAO(username,password);
