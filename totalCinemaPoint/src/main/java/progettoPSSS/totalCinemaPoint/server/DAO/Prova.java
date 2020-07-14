@@ -10,7 +10,7 @@ public class Prova {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		 
 		ClienteDAO d = new ClienteDAO("walterwhite");		
 		System.out.println(d.getCognome()+" "+d.getNome()+" "+d.geteMail());
 		
