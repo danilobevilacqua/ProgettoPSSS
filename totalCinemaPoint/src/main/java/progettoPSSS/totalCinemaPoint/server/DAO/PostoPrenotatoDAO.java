@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+@SuppressWarnings("all")
 @Entity
 @Table(name = "PostiPrenotati")
 public class PostoPrenotatoDAO implements Serializable{

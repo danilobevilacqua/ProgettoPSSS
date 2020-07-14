@@ -84,7 +84,6 @@ public class MenuCliente extends JFrame {
 		sceltaButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				SceltaSpettacolo s = new SceltaSpettacolo(getLocation());
-				//s.setVisible(true);
 				dispose();
 			}
 		});

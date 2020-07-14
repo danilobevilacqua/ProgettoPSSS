@@ -1,7 +1,6 @@
 package progettoPSSS.totalCinemaPoint.server.DAO;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-
+@SuppressWarnings("all")
 @Entity
 @Table(name = "Posti")
 public class PostoDAO implements Serializable{

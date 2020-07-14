@@ -3,9 +3,8 @@ package progettoPSSS.totalCinemaPoint.server.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import progettoPSSS.totalCinemaPoint.server.DAO.PostoPrenotatoDAO;
 import progettoPSSS.totalCinemaPoint.server.DAO.PrenotazioneDAO;
-import progettoPSSS.totalCinemaPoint.server.DAO.SpettacoloDAO;
+
 
 public class Prenotazione {
 

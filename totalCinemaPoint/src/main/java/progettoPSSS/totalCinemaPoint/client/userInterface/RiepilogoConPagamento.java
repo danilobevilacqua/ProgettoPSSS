@@ -19,28 +19,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import progettoPSSS.totalCinemaPoint.client.businessLogic.ControllerCliente;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
+
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+@SuppressWarnings("all")
 public class RiepilogoConPagamento extends JFrame {
 
 	private JPanel contentPane;
 	private static String titolo = "TOTAL CINEMA POINT - Riepilogo e Pagamento";
 	private static Map<String,String> mappaPosti;
 	private static Point p = new Point();
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,9 +48,6 @@ public class RiepilogoConPagamento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public RiepilogoConPagamento(final Point p, final Map<String,String> mappaPosti) {
 		super(titolo);
 		setResizable(false);
@@ -228,7 +219,6 @@ public class RiepilogoConPagamento extends JFrame {
 			dispose();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Gli ultimi posti sono stati occupati \n prima della tua prenotazione!", "Avviso", JOptionPane.ERROR_MESSAGE);
 			SceltaSpettacolo sc = new SceltaSpettacolo(getLocation());

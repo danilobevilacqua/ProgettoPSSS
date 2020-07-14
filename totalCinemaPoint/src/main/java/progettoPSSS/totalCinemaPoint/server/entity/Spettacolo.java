@@ -40,18 +40,6 @@ public class Spettacolo {
 		this.listaPrenotazioni = new ArrayList<Prenotazione>();
 	}
 	
-	/*	
-	public Spettacolo(int idSpettacolo, Date data, String ora, Double prezzo, int idFilm, String nomeSala,List<Prenotazione> listaPrenotazioni) {
-		super();
-		this.idSpettacolo = idSpettacolo;
-		this.data = data;
-		this.ora = ora;
-		this.prezzo = prezzo;
-		this.idFilm = idFilm;
-		this.nomeSala = nomeSala;
-		this.listaPrenotazioni = listaPrenotazioni;
-	}*/
-	
 	public int getIdSpettacolo() {
 		return idSpettacolo;
 	}

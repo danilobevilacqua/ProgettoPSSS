@@ -1,6 +1,5 @@
 package progettoPSSS.totalCinemaPoint.server.businessLogic;
 
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -27,11 +26,10 @@ import progettoPSSS.totalCinemaPoint.server.entity.PostoPrenotato;
 import progettoPSSS.totalCinemaPoint.server.entity.Prenotazione;
 import progettoPSSS.totalCinemaPoint.server.entity.Spettacolo;
 
+@SuppressWarnings("all")
 public class ControllerCliente extends UnicastRemoteObject implements IServizioCliente {
 
-//	private List<Cliente> listaClientiLoggati = new ArrayList<Cliente>();
 	private Cinema cinema = new Cinema();
-//	private IServizioPagamento servizioPagamento;
 	private Registry registry ;
 	private ObjectMapper om = new ObjectMapper();
 	
@@ -40,18 +38,6 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 		this.registry = r;
 	}
 	
-	/*
-	private double calcolaImporto(double prezzo, List<PostoPrenotato> postiScelti) {
-		double prezzoTotale = 0;
-		
-		for (PostoPrenotato pp : postiScelti) {
-			if (pp.getTipo().equals("prenotato")) {
-				prezzoTotale += prezzo;
-			}
-		}
-		return prezzoTotale;
-	}
-*/
 	private List<PostoPrenotato> postiValidati(Spettacolo spettacolo, List<PostoPrenotato> postiScelti) throws RemoteException {
 		
 		List<PostoPrenotato> listaPostiPrenotati = new ArrayList<PostoPrenotato>();
@@ -82,11 +68,9 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 		String clienteJSON = null;
 		try {
 			Cliente cliente = new Cliente(username, password);
-//			listaClientiLoggati.add(cliente);
 			
 			clienteJSON = om.writeValueAsString(cliente);
 		} catch (Exception e) {
-//			System.out.println("Log in fallito!");
 			throw new RemoteException("Log-in fallito!");
 		}
 		
@@ -175,7 +159,6 @@ public class ControllerCliente extends UnicastRemoteObject implements IServizioC
 		try {
 			servizioPagamento = (IServizioPagamento) registry.lookup("pagamento");
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
 			throw new RemoteException("servizio di pagamento non attivo");
 		}
 		if (!servizioPagamento.paga(importo, numeroConto))

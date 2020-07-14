@@ -61,9 +61,6 @@ public class PrenotaSpettacolo extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public PrenotaSpettacolo(final Point p, Map<String, String> mappa) {
 		super(titolo);
 		setResizable(false);

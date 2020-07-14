@@ -31,7 +31,6 @@ public class ControllerCliente {
 	static private ObjectMapper om = new ObjectMapper();
 	static private Cliente cliente;
 	static private List<Film> listaFilm;
-	//	static private int indicefilmSelezionato;
 	static private Film filmSelezionato;
 	static private Spettacolo spettacoloScelto;
 
@@ -40,17 +39,16 @@ public class ControllerCliente {
 	}
 
 	public static synchronized IServizioCliente getInstance() throws RemoteException, NotBoundException {
-		//if(sc == null) {
-			Registry r = LocateRegistry.getRegistry();
-			sc = (IServizioCliente) r.lookup("serviziocliente");
-	//	}
+
+		Registry r = LocateRegistry.getRegistry();
+		sc = (IServizioCliente) r.lookup("serviziocliente");
 
 		return sc;
 	}
 
 	public static boolean logIn(String username, String password) throws RemoteException, NotBoundException {
 		String clienteJSON = getInstance().logIn(username, password);
-		
+
 		try {
 			cliente = om.readValue(clienteJSON, Cliente.class);
 		} catch (JsonMappingException e) {
@@ -80,15 +78,7 @@ public class ControllerCliente {
 	}
 
 	public static List<String> getSpettacoliDate(String titoloFilm)  {
-
-		/*
-		for(int i = 0; i < listaFilm.size(); i++) {
-			if (listaFilm.get(i).equals(titoloFilm))  {
-				indicefilmSelezionato = i;
-				break;
-			}
-		}
-		 */	
+	
 		List<String> listaDateReturn = new ArrayList<String>();
 
 		for (Film f : listaFilm) {
@@ -161,14 +151,6 @@ public class ControllerCliente {
 
 		return mappaPosti;
 	}
-
-	/*
-	public static void prenota(Map <String,String> mappaPosti) {
-		String username = cliente.getUsername();
-		String numeroConto = cliente.getNumeroCartaCredito();
-		String spettacoloJSON = om.
-	}
-	 */
 
 	public static double calcolaImporto(Map <String,String> mappaPosti) {
 		double prezzoTotale = 0;

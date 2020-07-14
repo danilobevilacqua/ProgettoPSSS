@@ -1,11 +1,12 @@
 package progettoPSSS.totalCinemaPoint.server.entity;
 
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import progettoPSSS.totalCinemaPoint.server.DAO.PagamentoDAO;
-
+@SuppressWarnings("all")
 public class Pagamento {
 	
 	private int idPagamento;

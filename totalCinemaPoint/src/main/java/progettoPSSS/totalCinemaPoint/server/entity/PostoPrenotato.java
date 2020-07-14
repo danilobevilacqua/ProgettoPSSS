@@ -1,10 +1,9 @@
 package progettoPSSS.totalCinemaPoint.server.entity;
 
 
-import java.util.List;
 
 import progettoPSSS.totalCinemaPoint.server.DAO.PostoPrenotatoDAO;
-
+@SuppressWarnings("all")
 public class PostoPrenotato {
 
 	private int codicePrenotazione;

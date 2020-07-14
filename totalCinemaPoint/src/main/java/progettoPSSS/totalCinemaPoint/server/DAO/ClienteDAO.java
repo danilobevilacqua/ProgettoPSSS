@@ -64,7 +64,7 @@ public class ClienteDAO {
 		Session session = HibernateConnectionManager.getSessionFactory().openSession();
 	    session.beginTransaction();		 
 	    
-	    @SuppressWarnings("unchecked")
+	    @SuppressWarnings("all")
 	    Query query = session.createQuery("from ClienteDAO where username = :usernameScelto and password = :passwordScelta");
 	    query.setParameter("usernameScelto", username);
         query.setParameter("passwordScelta", password);	    
@@ -80,19 +80,6 @@ public class ClienteDAO {
 		this.eMail = d.geteMail();
 		this.telefono = d.getTelefono();
 	}
-
-	/*
-	public ClienteDAO(String username, String nome, String cognome, String password, String numeroCartaCredito,
-			String eMail, String telefono) {
-		super();
-		this.username = username;
-		this.nome = nome;
-		this.cognome = cognome;		
-		this.password = password;
-		this.numeroCartaCredito = numeroCartaCredito;
-		this.eMail = eMail;
-		this.telefono = telefono;
-	}*/
 
 	public String getNome() {
 		return nome;
@@ -149,18 +136,6 @@ public class ClienteDAO {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
-	/*
-	  public int saveCliente() {		  
-		  
-		  Session session = HibernateConnectionManager.getSessionFactory().openSession();
-		  session.beginTransaction();
-		 
-		  int id = (Integer) session.save(this);
-		  session.getTransaction().commit();
-		  session.close();
-		  return id;
-	  }	*/
 	  
 
 }

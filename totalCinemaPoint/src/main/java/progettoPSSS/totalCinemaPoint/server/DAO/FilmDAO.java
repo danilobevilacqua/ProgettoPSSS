@@ -64,16 +64,6 @@ public class FilmDAO {
 		this.locandina = f.getLocandina();
 		this.idcinema_fk = f.getIdcinema_fk();
 	}
-	/*
-	public FilmDAO(int idFilm, String titolo, String descrizione, int anno, String regista, byte[] locandina) {
-		super();
-		this.idFilm = idFilm;
-		this.titolo = titolo;
-		this.descrizione = descrizione;
-		this.anno = anno;
-		this.regista = regista;
-		this.locandina = locandina;
-	}*/
 
 	public int getIdFilm() {
 		return idFilm;
