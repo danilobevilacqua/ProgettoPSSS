@@ -194,20 +194,20 @@ public class RiepilogoConPagamento extends JFrame {
 					e.printStackTrace();
 					confermaButton.setEnabled(false);
 					indietroButton.setEnabled(false);
-					tornaSceltaPosto(false);
+					tornaSceltaPosto(false, e.getMessage().split(":")[2]);
 				} 
 			}
 		});
 
 		indietroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tornaSceltaPosto(true);
+				tornaSceltaPosto(true, null);
 			}
 		});		
 
 	}
 
-	private void tornaSceltaPosto(boolean indietroFlag) {
+	private void tornaSceltaPosto(boolean indietroFlag, String mex) {
 
 		String [] filmInfo = ControllerCliente.getDatiFilm().split("\n");
 		ControllerCliente.getSpettacoliDate(filmInfo[0]);
@@ -216,7 +216,11 @@ public class RiepilogoConPagamento extends JFrame {
 
 			mappa = ControllerCliente.getPosti(ControllerCliente.getDataSpettacoloSelezionato(), ControllerCliente.getOraSpettacoloSelezionato());
 			if(!indietroFlag) {
-				JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
+				if (mex.equals(" servizio di pagamento non attivo")) {
+					JOptionPane.showMessageDialog(null, "Attualmente "+mex+"\nRiprova più tardi", "Avviso", JOptionPane.ERROR_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Uno o più dei posti scelti risulta essere stato occupato!", "Avviso", JOptionPane.ERROR_MESSAGE);
+				}				
 			}
 			PrenotaSpettacolo ps = new PrenotaSpettacolo(getLocation(),mappa);
 			ps.setVisible(true);
