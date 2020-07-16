@@ -126,7 +126,11 @@ public class LoginCliente extends JFrame {
 					menu.setVisible(true);
 					dispose();
 				} catch (RemoteException | NotBoundException e1) {
-					if(e1.getMessage().split(":")[2].equals(" Log-in fallito!")) {
+					String[] messaggi = e1.getMessage().split(":");
+					if (messaggi.length != 3) {
+						JOptionPane.showMessageDialog(null, "Si sono verificati problemi di linea, \ncontrolla la tua connessione!", "Avviso", JOptionPane.ERROR_MESSAGE);
+					}
+					else if(e1.getMessage().split(":")[2].equals(" Log-in fallito!")) {
 						JOptionPane.showMessageDialog(null, "Log-in fallito!\nCredenziali non valide", "Avviso", JOptionPane.ERROR_MESSAGE);
 					}else {
 						JOptionPane.showMessageDialog(null, "Si sono verificati problemi di linea, \ncontrolla la tua connessione!", "Avviso", JOptionPane.ERROR_MESSAGE);
